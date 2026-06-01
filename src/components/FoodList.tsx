@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { Food, FoodCard as FoodCardType } from '../types'
+import type { Food, FoodCard as FoodCardType, UserProfile } from '../types'
 import FoodCard from './FoodCard'
 
 const formatRole = (role: string) =>
@@ -21,7 +21,11 @@ const roleColor = (role: string) => {
   }
 }
 
-export default function FoodList() {
+interface Props {
+  userProfile: UserProfile | null
+}
+
+export default function FoodList({ userProfile }: Props) {
   const [foods, setFoods] = useState<Food[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
