@@ -90,6 +90,26 @@ export interface MealResult {
   foods: MealFoodEntry[]
 }
 
+export interface FoodSummary {
+  id: number
+  name: string
+  role: string
+  scores: {
+    proteinQuality: number
+    micronutrientDensity: number
+    energyProfile: number
+    gutHealth: number
+    phytonutrients: number
+    overall: number
+  }
+}
+
+export interface CompareResult {
+  foodA: FoodSummary
+  foodB: FoodSummary
+  winner: Record<string, string>
+}
+
 export interface UserProfile {
   age: number
   weightKg: number

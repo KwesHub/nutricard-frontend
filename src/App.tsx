@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import FoodList from './components/FoodList'
 import MealBuilder from './components/MealBuilder'
+import FoodCompare from './components/FoodCompare'
 import TDEECalculator from './components/TDEECalculator'
 import type { UserProfile } from './types'
 
-type View = 'foods' | 'meal'
+type View = 'foods' | 'meal' | 'compare'
 
 function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
@@ -43,10 +44,19 @@ function App() {
         >
           Meal Builder
         </button>
+        <button
+          onClick={() => setView('compare')}
+          className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
+            view === 'compare' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          Compare
+        </button>
       </div>
 
       {view === 'foods' && <FoodList userProfile={userProfile} />}
       {view === 'meal' && <MealBuilder userProfile={userProfile} />}
+      {view === 'compare' && <FoodCompare />}
 
       {showTDEE && (
         <TDEECalculator
