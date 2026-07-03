@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import FoodList from './components/FoodList'
+import MealBuilder from './components/MealBuilder'
 import TDEECalculator from './components/TDEECalculator'
 import type { UserProfile } from './types'
+
+type View = 'foods' | 'meal'
 
 function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [showTDEE, setShowTDEE] = useState(false)
+  const [view, setView] = useState<View>('foods')
 
   return (
     <div className="min-h-screen bg-gray-950 text-white p-8">
@@ -21,9 +25,28 @@ function App() {
           {userProfile ? `${userProfile.tdee.toLocaleString()} kcal` : 'Set Calories'}
         </button>
       </div>
-      <div className="mt-8">
-        <FoodList userProfile={userProfile} />
+
+      <div className="flex gap-1 mt-6 mb-6 bg-gray-900 rounded-xl p-1 w-fit">
+        <button
+          onClick={() => setView('foods')}
+          className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
+            view === 'foods' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          Food Database
+        </button>
+        <button
+          onClick={() => setView('meal')}
+          className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
+            view === 'meal' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          Meal Builder
+        </button>
       </div>
+
+      {view === 'foods' && <FoodList userProfile={userProfile} />}
+      {view === 'meal' && <MealBuilder userProfile={userProfile} />}
 
       {showTDEE && (
         <TDEECalculator

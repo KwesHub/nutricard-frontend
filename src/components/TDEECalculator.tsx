@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { UserProfile } from '../types'
+import Modal from './Modal'
 
 interface Props {
   onClose: () => void
@@ -38,22 +39,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
-      onClick={onClose}
-    >
-      <div
-        className="relative bg-gray-900 rounded-2xl p-6 w-full overflow-y-auto"
-        style={{ maxWidth: '480px', maxHeight: '90vh' }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 bg-gray-800 hover:bg-gray-700 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold z-10"
-        >
-          ✕
-        </button>
-
+    <Modal onClose={onClose} maxWidth={480}>
         <h2 className="text-xl font-bold text-white mb-1">TDEE Calculator</h2>
         <p className="text-sm text-gray-400 mb-5">Calculate your daily calorie needs</p>
 
@@ -152,7 +138,6 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
             </div>
           )}
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }

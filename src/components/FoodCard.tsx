@@ -1,59 +1,96 @@
+import { useState, useMemo } from 'react'
 import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
-  Tooltip,
 } from 'recharts'
-import type { FoodCard as FoodCardType } from '../types'
+import type { FoodCard as FoodCardType, TimingContext, UserProfile } from '../types'
+import { formatRole, formatCategory, formatName, roleColor, statColor } from '../utils/formatting'
 
-const formatRole = (role: string) =>
-  role.split('_').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')
-
-const statColor = (value: number) => {
-  if (value >= 80) return 'bg-green-500'
-  if (value >= 60) return 'bg-lime-500'
-  if (value >= 40) return 'bg-amber-500'
-  if (value >= 20) return 'bg-orange-500'
-  return 'bg-red-500'
+const timingScoreToGrade = (score: number): string => {
+  if (score >= 85) return 'S'
+  if (score >= 70) return 'A'
+  if (score >= 55) return 'B'
+  if (score >= 40) return 'C'
+  if (score >= 25) return 'D'
+  return 'F'
 }
 
-const formatCategory = (cat: string) => cat.charAt(0) + cat.slice(1).toLowerCase()
+const timingTabs: { key: TimingContext; label: string }[] = [
+  { key: 'MORNING', label: 'Morning' },
+  { key: 'PRE_WORKOUT', label: 'Pre-Workout' },
+  { key: 'POST_WORKOUT', label: 'Post-Workout' },
+  { key: 'EVENING', label: 'Evening' },
+  { key: 'NEUTRAL', label: 'Neutral' },
+]
 
-const formatName = (name: string) =>
-  name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-
-const roleColor = (role: string) => {
-  switch (role) {
-    case 'DAILY_DRIVER': return 'bg-emerald-600'
-    case 'WEEKLY_ANCHOR': return 'bg-blue-600'
-    case 'BOOSTER': return 'bg-purple-600'
-    case 'PANTRY': return 'bg-gray-600'
-    case 'OCCASIONAL': return 'bg-amber-600'
-    default: return 'bg-gray-600'
-  }
+const timingInsights: Record<TimingContext, string> = {
+  MORNING: 'Ideal for starting the day with sustained energy',
+  PRE_WORKOUT: 'Fast fuel for exercise performance',
+  POST_WORKOUT: 'Supports recovery and muscle repair',
+  EVENING: 'Supports digestion and overnight repair',
+  NEUTRAL: 'Works well at any time of day',
 }
 
 interface Props {
   card: FoodCardType
+  userProfile?: UserProfile | null
 }
 
-export default function FoodCard({ card }: Props) {
+export default function FoodCard({ card, userProfile }: Props) {
   const { food, nutritionScore } = card
 
-  const radarData = [
-    { stat: 'Protein', label: 'Protein Quality', value: nutritionScore.proteinQuality },
-    { stat: 'Micros', label: 'Micronutrient Density', value: nutritionScore.micronutrientDensity },
-    { stat: 'Energy', label: 'Energy Profile', value: nutritionScore.energyProfile },
-    { stat: 'Gut', label: 'Gut Health', value: nutritionScore.gutHealth },
-    { stat: 'Phyto', label: 'Phytonutrients', value: nutritionScore.phytonutrients },
-  ]
+  const parsedTimingScores = useMemo(() => {
+    if (!nutritionScore.timingScores) return null
+    try {
+      return JSON.parse(nutritionScore.timingScores) as Record<TimingContext, number>
+    } catch {
+      return null
+    }
+  }, [nutritionScore.timingScores])
+
+  const bestTiming = useMemo<TimingContext>(() => {
+    if (!parsedTimingScores) return 'NEUTRAL'
+    let best: TimingContext = 'NEUTRAL'
+    let max = -1
+    for (const key of Object.keys(parsedTimingScores) as TimingContext[]) {
+      if (parsedTimingScores[key] > max) { max = parsedTimingScores[key]; best = key }
+    }
+    return best
+  }, [parsedTimingScores])
+
+  const [selectedTiming, setSelectedTiming] = useState<TimingContext>(bestTiming)
+  const [servingG, setServingG] = useState(100)
+
+  const scale = servingG / 100
+
+  const scaledStats = useMemo(() => [
+    { stat: 'Protein', label: 'Protein Quality', value: Math.min(nutritionScore.proteinQuality * scale, 100) },
+    { stat: 'Micros', label: 'Micronutrient Density', value: Math.min(nutritionScore.micronutrientDensity * scale, 100) },
+    { stat: 'Energy', label: 'Energy Profile', value: Math.min(nutritionScore.energyProfile * scale, 100) },
+    { stat: 'Gut', label: 'Gut Health', value: Math.min(nutritionScore.gutHealth * scale, 100) },
+    { stat: 'Phyto', label: 'Phytonutrients', value: Math.min(nutritionScore.phytonutrients * scale, 100) },
+  ], [nutritionScore, scale])
+
+  const calories = nutritionScore.kcalPer100g ? Math.round(nutritionScore.kcalPer100g * scale) : null
+  const calPct = (calories && userProfile?.tdee) ? (calories / userProfile.tdee * 100) : null
+
+  const synergy = nutritionScore.synergyPotential
+  const synergyColor = synergy >= 70 ? 'text-green-400' : synergy >= 40 ? 'text-amber-400' : 'text-red-400'
+  const synergyDesc = synergy >= 70
+    ? 'Highly versatile — combines well with many foods'
+    : synergy >= 40
+      ? 'Moderate synergy — works well in balanced meals'
+      : 'Best as a standalone — limited combination benefit'
+
+  const bestTimingLabel = timingTabs.find(t => t.key === bestTiming)!.label
 
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-2">
         <div>
           <h2 className="text-2xl font-bold text-white">{formatName(food.name)}</h2>
           <span
@@ -71,16 +108,64 @@ export default function FoodCard({ card }: Props) {
         </div>
       </div>
 
+      {/* Timing Tabs */}
+      {parsedTimingScores && (
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {timingTabs.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setSelectedTiming(t.key)}
+            className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors ${
+              selectedTiming === t.key
+                ? 'bg-emerald-600 text-white'
+                : 'bg-gray-800 text-gray-400 hover:text-white'
+            }`}
+          >
+            {t.label}
+            <span className="ml-1 opacity-75">({timingScoreToGrade(parsedTimingScores[t.key])})</span>
+          </button>
+        ))}
+      </div>
+      )}
+
+      {/* Serving Size */}
+      <div className="flex items-center gap-3 mb-2">
+        <label className="text-xs text-gray-400">Serving size</label>
+        <div className="flex items-center gap-1">
+          <input
+            type="number"
+            value={servingG}
+            onChange={(e) => setServingG(Math.max(0, Number(e.target.value)))}
+            className="w-16 px-2 py-1 text-sm rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors text-center"
+          />
+          <span className="text-xs text-gray-400">g</span>
+        </div>
+      </div>
+
+      {/* Calories */}
+      {calories !== null && (
+        <div className="mb-4">
+          <span className="text-sm text-gray-300">Calories: <span className="font-semibold text-white">~{calories.toLocaleString()} kcal</span></span>
+          {calPct !== null && (
+            <span className={`ml-2 text-xs font-medium ${
+              calPct < 15 ? 'text-green-400' : calPct <= 30 ? 'text-amber-400' : 'text-red-400'
+            }`}>
+              ({calPct.toFixed(1)}% of your daily budget)
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Radar Chart */}
       <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-        <div style={{ overflowX: 'auto', outline: 'none', border: 'none' }}>
+        <div style={{ overflowX: 'auto' }}>
           <RadarChart
             width={420}
             height={340}
-            data={radarData}
+            data={scaledStats}
             margin={{ top: 30, right: 80, bottom: 30, left: 80 }}
           >
-            <PolarGrid stroke="#374151" strokeWidth={0.5} />
+            <PolarGrid stroke="#374151" />
             <PolarAngleAxis
               dataKey="stat"
               tick={{ fill: '#9ca3af', fontSize: 12, dy: -5 }}
@@ -95,21 +180,6 @@ export default function FoodCard({ card }: Props) {
               stroke="#10b981"
               fill="#10b981"
               fillOpacity={0.3}
-              dot={false}
-              activeDot={false}
-            />
-            <Tooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  return (
-                    <div style={{ background: '#1f2937', padding: '8px 12px', borderRadius: '8px', border: '1px solid #374151' }}>
-                      <p style={{ color: '#10b981', margin: 0, fontWeight: 'bold' }}>{payload[0].payload.stat}</p>
-                      <p style={{ color: 'white', margin: 0 }}>{Number(payload[0].value).toFixed(1)}</p>
-                    </div>
-                  )
-                }
-                return null
-              }}
             />
           </RadarChart>
         </div>
@@ -117,7 +187,7 @@ export default function FoodCard({ card }: Props) {
 
       {/* Stat Bars */}
       <div className="flex flex-col gap-3">
-        {radarData.map((d) => (
+        {scaledStats.map((d) => (
           <div key={d.stat}>
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs text-gray-400">{d.label}</span>
@@ -131,6 +201,26 @@ export default function FoodCard({ card }: Props) {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Synergy Potential */}
+      <div className="mt-5 p-3 bg-gray-800 rounded-lg">
+        <div className="flex items-center gap-2 mb-1">
+          <span>⚡</span>
+          <span className="text-xs font-medium text-gray-300">Synergy Potential</span>
+          <span className={`text-xs font-bold ml-auto ${synergyColor}`}>{Math.round(synergy)}/100</span>
+        </div>
+        <p className="text-xs text-gray-500">{synergyDesc}</p>
+      </div>
+
+      {/* Best Timing Insight */}
+      <div className="mt-3 p-3 bg-gray-800 rounded-lg">
+        <div className="flex items-center gap-2 mb-1">
+          <span>🕐</span>
+          <span className="text-xs font-medium text-gray-300">Best timing:</span>
+          <span className="text-xs font-bold text-emerald-400">{bestTimingLabel}</span>
+        </div>
+        <p className="text-xs text-gray-500">{timingInsights[bestTiming]}</p>
       </div>
     </div>
   )
