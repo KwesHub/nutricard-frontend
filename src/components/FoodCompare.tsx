@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from 'react'
 import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
 } from 'recharts'
-import type { Food, CompareResult } from '../types'
+import type { Food, CompareResult, TopNutrient } from '../types'
 import { API_BASE_URL } from '../config'
-import { formatName, formatRole, roleColor } from '../utils/formatting'
+import { formatName, formatNutrient, formatPctRda, formatRole, roleColor } from '../utils/formatting'
 
 const STATS: { key: keyof CompareResult['foodA']['scores']; label: string; short: string }[] = [
   { key: 'proteinQuality',      label: 'Protein Quality',       short: 'Protein' },
@@ -13,6 +13,27 @@ const STATS: { key: keyof CompareResult['foodA']['scores']; label: string; short
   { key: 'gutHealth',           label: 'Gut Health',            short: 'Gut'     },
   { key: 'phytonutrients',      label: 'Phytonutrients',        short: 'Phyto'   },
 ]
+
+function UniqueStrengthsList({ nutrients }: { nutrients: TopNutrient[] }) {
+  if (nutrients.length === 0) {
+    return <p className="text-xs text-gray-600">No unique strengths</p>
+  }
+  return (
+    <div className="flex flex-col gap-1">
+      {nutrients.map(n => (
+        <div key={n.name} className="flex items-center justify-between">
+          <span className="text-xs text-gray-300">
+            {formatNutrient(n.name)}
+            {n.rare && (
+              <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>
+            )}
+          </span>
+          <span className="text-xs text-gray-500">{formatPctRda(n.pctRda)} RDA</span>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function FoodCompare() {
   const [foods, setFoods] = useState<Food[]>([])
@@ -215,6 +236,35 @@ export default function FoodCompare() {
               )
             })}
           </div>
+
+          {/* What each brings — nutrients one food covers that the other barely has */}
+          {result.uniqueStrengths && (
+            result.uniqueStrengths.foodA.length > 0 || result.uniqueStrengths.foodB.length > 0 ? (
+              <div className="mt-5">
+                <p className="text-xs font-medium text-gray-300 mb-2 text-center">
+                  What each food uniquely brings (% RDA per 100g)
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-gray-800 rounded-xl p-3 border-l-4 border-emerald-500">
+                    <p className="text-xs font-semibold text-emerald-400 mb-2">
+                      {formatName(result.foodA.name)}
+                    </p>
+                    <UniqueStrengthsList nutrients={result.uniqueStrengths.foodA} />
+                  </div>
+                  <div className="bg-gray-800 rounded-xl p-3 border-l-4 border-blue-500">
+                    <p className="text-xs font-semibold text-blue-400 mb-2">
+                      {formatName(result.foodB.name)}
+                    </p>
+                    <UniqueStrengthsList nutrients={result.uniqueStrengths.foodB} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="mt-5 text-center text-xs text-gray-500">
+                These foods cover similar nutrient ground.
+              </p>
+            )
+          )}
 
           {/* Reset */}
           <button

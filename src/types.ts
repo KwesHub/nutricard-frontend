@@ -38,9 +38,20 @@ export interface GutBreakdown {
   omega3Bonus: number
 }
 
+export interface TopNutrient {
+  name: string
+  pctRda: number
+  rare: boolean
+}
+
 export interface MicroBreakdown {
-  topNutrient: string
-  coveragePct: number
+  topNutrients: TopNutrient[]
+  coverages: Record<string, number>
+}
+
+export interface CardInsights {
+  standoutFact: string | null
+  penaltyNote: string | null
 }
 
 export interface NutritionScore {
@@ -64,6 +75,7 @@ export interface NutritionScore {
 export interface FoodCard {
   food: Food
   nutritionScore: NutritionScore
+  insights?: CardInsights
 }
 
 export interface MealFoodEntry {
@@ -108,6 +120,10 @@ export interface CompareResult {
   foodA: FoodSummary
   foodB: FoodSummary
   winner: Record<string, string>
+  uniqueStrengths?: {
+    foodA: TopNutrient[]
+    foodB: TopNutrient[]
+  }
 }
 
 export interface UserProfile {
