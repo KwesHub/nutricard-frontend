@@ -84,6 +84,12 @@ export interface MealFoodEntry {
   quantityG: number
 }
 
+export interface NutrientAnalysis {
+  coverage: Record<string, number>
+  gaps: { name: string; rare: boolean }[]
+  suggestions: { foodId: number; foodName: string; covers: string[] }[]
+}
+
 export interface MealResult {
   meal: {
     id: number
@@ -100,6 +106,7 @@ export interface MealResult {
     activeSynergies: string | null
   }
   foods: MealFoodEntry[]
+  nutrientAnalysis?: NutrientAnalysis
 }
 
 export interface FoodSummary {
