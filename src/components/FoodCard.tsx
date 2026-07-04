@@ -6,8 +6,8 @@ import {
   PolarRadiusAxis,
   Radar,
 } from 'recharts'
-import type { FoodCard as FoodCardType, TimingContext, UserProfile } from '../types'
-import { formatRole, formatCategory, formatName, roleColor, statColor } from '../utils/formatting'
+import type { FoodCard as FoodCardType, MicroBreakdown, ProteinBreakdown, TimingContext, UserProfile } from '../types'
+import { formatRole, formatCategory, formatName, formatNutrient, formatPctRda, roleColor, statColor } from '../utils/formatting'
 
 const timingScoreToGrade = (score: number): string => {
   if (score >= 85) return 'S'
@@ -40,7 +40,28 @@ interface Props {
 }
 
 export default function FoodCard({ card, userProfile }: Props) {
-  const { food, nutritionScore } = card
+  const { food, nutritionScore, insights } = card
+
+  const parsedMicro = useMemo<MicroBreakdown | null>(() => {
+    if (!nutritionScore.microBreakdown) return null
+    try {
+      const parsed = JSON.parse(nutritionScore.microBreakdown) as MicroBreakdown
+      // Below 10% RDA a nutrient isn't a meaningful contributor — hide it so
+      // micronutrient-poor foods don't list e.g. "Iron 3%" as a top nutrient
+      return { ...parsed, topNutrients: parsed.topNutrients.filter(n => n.pctRda >= 10) }
+    } catch {
+      return null
+    }
+  }, [nutritionScore.microBreakdown])
+
+  const parsedProtein = useMemo<ProteinBreakdown | null>(() => {
+    if (!nutritionScore.proteinBreakdown) return null
+    try {
+      return JSON.parse(nutritionScore.proteinBreakdown) as ProteinBreakdown
+    } catch {
+      return null
+    }
+  }, [nutritionScore.proteinBreakdown])
 
   const parsedTimingScores = useMemo(() => {
     if (!nutritionScore.timingScores) return null
@@ -202,6 +223,76 @@ export default function FoodCard({ card, userProfile }: Props) {
           </div>
         ))}
       </div>
+
+      {/* Why this score — top nutrient contributors */}
+      {parsedMicro && parsedMicro.topNutrients.length > 0 && (
+        <div className="mt-5 p-3 bg-gray-800 rounded-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <span>🔬</span>
+            <span className="text-xs font-medium text-gray-300">Top nutrients (per 100g)</span>
+          </div>
+          <div className="flex flex-col gap-2">
+            {parsedMicro.topNutrients.map((n) => (
+              <div key={n.name}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs text-gray-400">
+                    {formatNutrient(n.name)}
+                    {n.rare && (
+                      <span className="ml-1.5 text-amber-400" title="Hard to find in most diets">
+                        ★ rare
+                      </span>
+                    )}
+                  </span>
+                  <span className="text-xs text-gray-300">{formatPctRda(n.pctRda)} RDA</span>
+                </div>
+                <div className="w-full h-1.5 bg-gray-700 rounded-full">
+                  <div
+                    className="h-1.5 bg-emerald-500 rounded-full"
+                    style={{ width: `${Math.min(n.pctRda, 100)}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Protein quality drivers — hidden for zero-protein foods where PDCAAS is meaningless */}
+      {parsedProtein && parsedProtein.rawProteinG > 0 && (
+        <div className="mt-3 p-3 bg-gray-800 rounded-lg">
+          <div className="flex items-center gap-2 mb-1">
+            <span>💪</span>
+            <span className="text-xs font-medium text-gray-300">Protein quality drivers</span>
+          </div>
+          <p className="text-xs text-gray-500">
+            {parsedProtein.rawProteinG.toFixed(1)}g protein per 100g · PDCAAS{' '}
+            {parsedProtein.pdcaas.toFixed(2)} · amino completeness{' '}
+            {Math.round(parsedProtein.completenessFactor * 100)}%
+          </p>
+        </div>
+      )}
+
+      {/* Standout fact */}
+      {insights?.standoutFact && (
+        <div className="mt-3 p-3 bg-emerald-950/50 border border-emerald-800 rounded-lg">
+          <div className="flex items-center gap-2 mb-1">
+            <span>💡</span>
+            <span className="text-xs font-medium text-emerald-300">Standout</span>
+          </div>
+          <p className="text-xs text-emerald-100/80">{insights.standoutFact}</p>
+        </div>
+      )}
+
+      {/* Anti-nutrient watch-out */}
+      {insights?.penaltyNote && (
+        <div className="mt-3 p-3 bg-amber-950/40 border border-amber-800 rounded-lg">
+          <div className="flex items-center gap-2 mb-1">
+            <span>⚠️</span>
+            <span className="text-xs font-medium text-amber-300">Watch-out</span>
+          </div>
+          <p className="text-xs text-amber-100/80">{insights.penaltyNote}</p>
+        </div>
+      )}
 
       {/* Synergy Potential */}
       <div className="mt-5 p-3 bg-gray-800 rounded-lg">
