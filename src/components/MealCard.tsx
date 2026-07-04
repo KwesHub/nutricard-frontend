@@ -3,7 +3,7 @@ import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
 } from 'recharts'
 import type { MealResult, UserProfile } from '../types'
-import { formatName, formatRole, roleColor, statColor } from '../utils/formatting'
+import { formatName, formatNutrient, formatRole, roleColor, statColor } from '../utils/formatting'
 
 interface Props {
   result: MealResult
@@ -19,7 +19,7 @@ const timingLabel: Record<string, string> = {
 }
 
 export default function MealCard({ result, userProfile: _userProfile }: Props) {
-  const { meal, mealScore, foods } = result
+  const { meal, mealScore, foods, nutrientAnalysis } = result
 
   const stats = useMemo(() => [
     { stat: 'Protein', label: 'Protein Quality',        value: mealScore.proteinQuality },
@@ -109,6 +109,56 @@ export default function MealCard({ result, userProfile: _userProfile }: Props) {
           </ul>
         )}
       </div>
+
+      {/* Nutrient gaps + fill suggestions */}
+      {nutrientAnalysis && (
+        <div className="mb-4 p-3 bg-gray-800 rounded-lg">
+          <p className="text-xs font-semibold text-gray-300 mb-2">
+            Nutrient Gaps{nutrientAnalysis.gaps.length > 0 ? ` (${nutrientAnalysis.gaps.length})` : ''}
+          </p>
+          {nutrientAnalysis.gaps.length === 0 ? (
+            <p className="text-xs text-emerald-400">
+              This meal touches every nutrient we track — nicely balanced.
+            </p>
+          ) : (
+            <>
+              <p className="text-xs text-gray-500 mb-2">
+                Barely present in this meal — worth covering here or later today:
+              </p>
+              <div className="flex flex-wrap gap-1.5 mb-3">
+                {nutrientAnalysis.gaps.map(g => (
+                  <span
+                    key={g.name}
+                    className={`text-xs px-2 py-0.5 rounded-full border ${
+                      g.rare
+                        ? 'border-amber-700 text-amber-300'
+                        : 'border-gray-600 text-gray-400'
+                    }`}
+                  >
+                    {formatNutrient(g.name)}
+                    {g.rare && <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>}
+                  </span>
+                ))}
+              </div>
+              {nutrientAnalysis.suggestions.length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  {nutrientAnalysis.suggestions.map(s => (
+                    <div key={s.foodId} className="flex items-start gap-2 text-xs">
+                      <span className="text-emerald-500 mt-0.5 shrink-0">+</span>
+                      <span className="text-gray-300">
+                        Add <span className="font-semibold text-white">{formatName(s.foodName)}</span>
+                        <span className="text-gray-500">
+                          {' '}→ covers {s.covers.map(formatNutrient).join(', ')}
+                        </span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
 
       {/* Ingredients */}
       <div className="p-3 bg-gray-800 rounded-lg">
