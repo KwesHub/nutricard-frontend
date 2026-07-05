@@ -1,3 +1,8 @@
+export interface Badge {
+  label: string
+  kind: 'strength' | 'rare' | 'watch'
+}
+
 export interface Food {
   id: number
   name: string
@@ -5,6 +10,7 @@ export interface Food {
   description?: string
   foodRole: string
   servingSizeG: number
+  badges?: Badge[]
 }
 
 export type TimingContext = 'MORNING' | 'PRE_WORKOUT' | 'POST_WORKOUT' | 'EVENING' | 'NEUTRAL'
@@ -52,6 +58,7 @@ export interface MicroBreakdown {
 export interface CardInsights {
   standoutFact: string | null
   penaltyNote: string | null
+  badges?: Badge[]
 }
 
 export interface NutritionScore {

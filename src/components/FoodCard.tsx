@@ -8,6 +8,7 @@ import {
 } from 'recharts'
 import type { FoodCard as FoodCardType, MicroBreakdown, ProteinBreakdown, TimingContext, UserProfile } from '../types'
 import { formatRole, formatCategory, formatName, formatNutrient, formatPctRda, roleColor, statColor } from '../utils/formatting'
+import BadgeChip from './BadgeChip'
 
 const timingScoreToGrade = (score: number): string => {
   if (score >= 85) return 'S'
@@ -128,6 +129,15 @@ export default function FoodCard({ card, userProfile }: Props) {
           <span className="text-sm text-gray-400">/100</span>
         </div>
       </div>
+
+      {/* Nutrient Badges */}
+      {insights?.badges && insights.badges.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {insights.badges.map((b) => (
+            <BadgeChip key={`${b.kind}-${b.label}`} badge={b} />
+          ))}
+        </div>
+      )}
 
       {/* Timing Tabs */}
       {parsedTimingScores && (

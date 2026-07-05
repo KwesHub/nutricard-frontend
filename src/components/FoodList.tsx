@@ -3,6 +3,7 @@ import type { Food, FoodCard as FoodCardType, UserProfile } from '../types'
 import { formatRole, formatCategory, formatName, roleColor } from '../utils/formatting'
 import { API_BASE_URL } from '../config'
 import FoodCard from './FoodCard'
+import BadgeChip from './BadgeChip'
 import Modal from './Modal'
 
 interface Props {
@@ -102,6 +103,13 @@ export default function FoodList({ userProfile }: Props) {
               {formatRole(food.foodRole)}
             </span>
             <p className="text-sm text-gray-400">{formatCategory(food.category)}</p>
+            {food.badges && food.badges.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {food.badges.map((b) => (
+                  <BadgeChip key={`${b.kind}-${b.label}`} badge={b} />
+                ))}
+              </div>
+            )}
             <button
               onClick={() => handleViewCard(food.id)}
               disabled={loadingId === food.id}
