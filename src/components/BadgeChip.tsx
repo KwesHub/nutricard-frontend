@@ -6,6 +6,13 @@ const kindStyle: Record<Badge['kind'], string> = {
   strength: 'border-emerald-700 text-emerald-300',
   rare: 'border-amber-700 text-amber-300',
   watch: 'border-red-900 text-red-300',
+  cap: 'border-orange-800 text-orange-300',
+}
+
+function chipText(badge: Badge) {
+  if (badge.kind === 'watch') return `⚠ ${badge.label}`
+  if (badge.kind === 'cap') return `⛔ ${badge.label}`
+  return formatNutrient(badge.label)
 }
 
 export default function BadgeChip({ badge }: { badge: Badge }) {
@@ -22,7 +29,7 @@ export default function BadgeChip({ badge }: { badge: Badge }) {
           hasDetail ? 'cursor-pointer hover:bg-gray-800' : 'cursor-default'
         }`}
       >
-        {badge.kind === 'watch' ? `⚠ ${badge.label}` : formatNutrient(badge.label)}
+        {chipText(badge)}
         {badge.kind === 'rare' && <span className="ml-1 text-amber-400">★</span>}
       </button>
       {open && hasDetail && (

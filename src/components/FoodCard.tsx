@@ -27,12 +27,14 @@ const timingTabs: { key: TimingContext; label: string }[] = [
   { key: 'NEUTRAL', label: 'Neutral' },
 ]
 
+// Copy explains the gastric-emptying reasoning behind each grade, so the rating reads as
+// justified rather than arbitrary (fat/fibre/protein slow the stomach; GI drives blood sugar).
 const timingInsights: Record<TimingContext, string> = {
-  MORNING: 'Ideal for starting the day with sustained energy',
-  PRE_WORKOUT: 'Fast fuel for exercise performance',
-  POST_WORKOUT: 'Supports recovery and muscle repair',
-  EVENING: 'Supports digestion and overnight repair',
-  NEUTRAL: 'Works well at any time of day',
+  MORNING: 'Slow-release fuel — fat, fibre and protein keep it in the stomach longer for steady all-morning energy.',
+  PRE_WORKOUT: 'Rocket fuel — low fat and fibre so it clears the stomach fast, with higher-GI carbs for quick blood glucose.',
+  POST_WORKOUT: 'Quick-delivered carbs plus protein to refill glycogen and kick off muscle repair.',
+  EVENING: 'Light on the stomach but low-GI — settles easily for sleep without a blood-sugar spike.',
+  NEUTRAL: 'Balanced fuel with no strong pre- or post-workout skew — fine whenever.',
 }
 
 interface Props {
