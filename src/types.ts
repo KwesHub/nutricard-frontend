@@ -1,6 +1,7 @@
 export interface Badge {
   label: string
   kind: 'strength' | 'rare' | 'watch'
+  detail?: string | null
 }
 
 export interface Food {
@@ -93,7 +94,7 @@ export interface MealFoodEntry {
 
 export interface NutrientAnalysis {
   coverage: Record<string, number>
-  gaps: { name: string; rare: boolean }[]
+  gaps: { name: string; rare: boolean; cadence: 'DAILY' | 'WEEKLY' }[]
   suggestions: { foodId: number; foodName: string; covers: string[] }[]
 }
 
@@ -130,6 +131,13 @@ export interface FoodSummary {
   }
 }
 
+export interface LeadingNutrient {
+  name: string
+  pctRda: number
+  otherPctRda: number
+  rare: boolean
+}
+
 export interface CompareResult {
   foodA: FoodSummary
   foodB: FoodSummary
@@ -137,6 +145,10 @@ export interface CompareResult {
   uniqueStrengths?: {
     foodA: TopNutrient[]
     foodB: TopNutrient[]
+  }
+  leadsOn?: {
+    foodA: LeadingNutrient[]
+    foodB: LeadingNutrient[]
   }
 }
 

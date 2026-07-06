@@ -60,11 +60,11 @@ export default function FoodList({ userProfile }: Props) {
 
   const roles: { label: string; value: string | null; bg: string }[] = [
     { label: 'All', value: null, bg: 'bg-gray-600' },
-    { label: 'Daily Driver', value: 'DAILY_DRIVER', bg: 'bg-emerald-600' },
-    { label: 'Weekly Anchor', value: 'WEEKLY_ANCHOR', bg: 'bg-blue-600' },
-    { label: 'Booster', value: 'BOOSTER', bg: 'bg-purple-600' },
-    { label: 'Pantry', value: 'PANTRY', bg: 'bg-gray-600' },
-    { label: 'Occasional', value: 'OCCASIONAL', bg: 'bg-amber-600' },
+    { label: 'Eat daily', value: 'DAILY_DRIVER', bg: 'bg-emerald-600' },
+    { label: '2–3× a week', value: 'WEEKLY_ANCHOR', bg: 'bg-blue-600' },
+    { label: 'Small boost', value: 'BOOSTER', bg: 'bg-purple-600' },
+    { label: 'Flavour staple', value: 'PANTRY', bg: 'bg-gray-600' },
+    { label: 'Treat', value: 'OCCASIONAL', bg: 'bg-amber-600' },
   ]
 
   return (

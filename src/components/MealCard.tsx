@@ -2,8 +2,21 @@ import { useMemo } from 'react'
 import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
 } from 'recharts'
-import type { MealResult, UserProfile } from '../types'
+import type { MealResult, NutrientAnalysis, UserProfile } from '../types'
 import { formatName, formatNutrient, formatRole, roleColor, statColor } from '../utils/formatting'
+
+function GapChip({ gap }: { gap: NutrientAnalysis['gaps'][number] }) {
+  return (
+    <span
+      className={`text-xs px-2 py-0.5 rounded-full border ${
+        gap.rare ? 'border-amber-700 text-amber-300' : 'border-gray-600 text-gray-400'
+      }`}
+    >
+      {formatNutrient(gap.name)}
+      {gap.rare && <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>}
+    </span>
+  )
+}
 
 interface Props {
   result: MealResult
@@ -38,6 +51,9 @@ export default function MealCard({ result, userProfile: _userProfile }: Props) {
   }, [mealScore.activeSynergies])
 
   const totalG = foods.reduce((sum, f) => sum + f.quantityG, 0)
+
+  const dailyGaps = nutrientAnalysis?.gaps.filter(g => g.cadence !== 'WEEKLY') ?? []
+  const weeklyGaps = nutrientAnalysis?.gaps.filter(g => g.cadence === 'WEEKLY') ?? []
 
   return (
     <div className="w-full">
@@ -122,33 +138,35 @@ export default function MealCard({ result, userProfile: _userProfile }: Props) {
             </p>
           ) : (
             <>
-              <p className="text-xs text-gray-500 mb-2">
-                Barely present in this meal — worth covering here or later today:
-              </p>
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {nutrientAnalysis.gaps.map(g => (
-                  <span
-                    key={g.name}
-                    className={`text-xs px-2 py-0.5 rounded-full border ${
-                      g.rare
-                        ? 'border-amber-700 text-amber-300'
-                        : 'border-gray-600 text-gray-400'
-                    }`}
-                  >
-                    {formatNutrient(g.name)}
-                    {g.rare && <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>}
-                  </span>
-                ))}
-              </div>
+              {dailyGaps.length > 0 && (
+                <>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Worth covering today — these don't store in the body:
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {dailyGaps.map(g => <GapChip key={g.name} gap={g} />)}
+                  </div>
+                </>
+              )}
+              {weeklyGaps.length > 0 && (
+                <>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Fine to cover across the week — the body stores these (e.g. oily fish twice a week handles omega-3s):
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {weeklyGaps.map(g => <GapChip key={g.name} gap={g} />)}
+                  </div>
+                </>
+              )}
               {nutrientAnalysis.suggestions.length > 0 && (
                 <div className="flex flex-col gap-1.5">
                   {nutrientAnalysis.suggestions.map(s => (
                     <div key={s.foodId} className="flex items-start gap-2 text-xs">
                       <span className="text-emerald-500 mt-0.5 shrink-0">+</span>
                       <span className="text-gray-300">
-                        Add <span className="font-semibold text-white">{formatName(s.foodName)}</span>
+                        Later today: <span className="font-semibold text-white">{formatName(s.foodName)}</span>
                         <span className="text-gray-500">
-                          {' '}→ covers {s.covers.map(formatNutrient).join(', ')}
+                          {' '}covers {s.covers.map(formatNutrient).join(', ')}
                         </span>
                       </span>
                     </div>

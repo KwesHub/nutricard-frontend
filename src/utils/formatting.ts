@@ -1,4 +1,15 @@
+// Plain-language frequency labels — the enum names (Daily Driver, Weekly Anchor…) read as
+// jargon. Criteria for each label live in FUTURE_PLANS.md at the workspace root.
+const ROLE_LABELS: Record<string, string> = {
+  DAILY_DRIVER: 'Eat daily',
+  WEEKLY_ANCHOR: '2–3× a week',
+  BOOSTER: 'Small boost',
+  PANTRY: 'Flavour staple',
+  OCCASIONAL: 'Treat — for taste',
+}
+
 export const formatRole = (role: string) =>
+  ROLE_LABELS[role] ??
   role.split('_').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')
 
 export const formatCategory = (cat: string) => cat.charAt(0) + cat.slice(1).toLowerCase()

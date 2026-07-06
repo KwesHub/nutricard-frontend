@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
 } from 'recharts'
-import type { Food, CompareResult, TopNutrient } from '../types'
+import type { Food, CompareResult, LeadingNutrient, TopNutrient } from '../types'
 import { API_BASE_URL } from '../config'
 import { formatName, formatNutrient, formatPctRda, formatRole, roleColor } from '../utils/formatting'
 
@@ -31,6 +31,30 @@ function UniqueStrengthsList({ nutrients }: { nutrients: TopNutrient[] }) {
           <span className="text-xs text-gray-500">{formatPctRda(n.pctRda)} RDA</span>
         </div>
       ))}
+    </div>
+  )
+}
+
+function LeadsOnList({ nutrients }: { nutrients: LeadingNutrient[] }) {
+  if (nutrients.length === 0) return null
+  return (
+    <div className="mt-2 pt-2 border-t border-gray-700">
+      <p className="text-[10px] uppercase tracking-wide text-gray-500 mb-1">Also leads on</p>
+      <div className="flex flex-col gap-1">
+        {nutrients.map(n => (
+          <div key={n.name} className="flex items-center justify-between">
+            <span className="text-xs text-gray-300">
+              {formatNutrient(n.name)}
+              {n.rare && (
+                <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>
+              )}
+            </span>
+            <span className="text-xs text-gray-500">
+              {formatPctRda(n.pctRda)} vs {formatPctRda(n.otherPctRda)}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -237,12 +261,13 @@ export default function FoodCompare() {
             })}
           </div>
 
-          {/* What each brings — nutrients one food covers that the other barely has */}
+          {/* What each brings — unique nutrients plus shared nutrients one food clearly leads on */}
           {result.uniqueStrengths && (
-            result.uniqueStrengths.foodA.length > 0 || result.uniqueStrengths.foodB.length > 0 ? (
+            result.uniqueStrengths.foodA.length > 0 || result.uniqueStrengths.foodB.length > 0 ||
+            (result.leadsOn?.foodA.length ?? 0) > 0 || (result.leadsOn?.foodB.length ?? 0) > 0 ? (
               <div className="mt-5">
                 <p className="text-xs font-medium text-gray-300 mb-2 text-center">
-                  What each food uniquely brings (% RDA per 100g)
+                  What each food brings (% RDA per 100g)
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-gray-800 rounded-xl p-3 border-l-4 border-emerald-500">
@@ -250,12 +275,14 @@ export default function FoodCompare() {
                       {formatName(result.foodA.name)}
                     </p>
                     <UniqueStrengthsList nutrients={result.uniqueStrengths.foodA} />
+                    <LeadsOnList nutrients={result.leadsOn?.foodA ?? []} />
                   </div>
                   <div className="bg-gray-800 rounded-xl p-3 border-l-4 border-blue-500">
                     <p className="text-xs font-semibold text-blue-400 mb-2">
                       {formatName(result.foodB.name)}
                     </p>
                     <UniqueStrengthsList nutrients={result.uniqueStrengths.foodB} />
+                    <LeadsOnList nutrients={result.leadsOn?.foodB ?? []} />
                   </div>
                 </div>
               </div>

@@ -84,19 +84,20 @@ export default function FoodCard({ card, userProfile }: Props) {
   }, [parsedTimingScores])
 
   const [selectedTiming, setSelectedTiming] = useState<TimingContext>(bestTiming)
-  const [servingG, setServingG] = useState(100)
+  // Open at the food's realistic serving (garlic 10g, olive oil 15g) rather than 100g
+  const [servingG, setServingG] = useState(food.servingSizeG || 100)
 
-  const scale = servingG / 100
+  // The five scores are per-100g quality ratings — density doesn't drop because you eat
+  // less of it. The serving input scales only calories and the TDEE share.
+  const stats = useMemo(() => [
+    { stat: 'Protein', label: 'Protein Quality', value: nutritionScore.proteinQuality },
+    { stat: 'Micros', label: 'Micronutrient Density', value: nutritionScore.micronutrientDensity },
+    { stat: 'Energy', label: 'Energy Profile', value: nutritionScore.energyProfile },
+    { stat: 'Gut', label: 'Gut Health', value: nutritionScore.gutHealth },
+    { stat: 'Phyto', label: 'Phytonutrients', value: nutritionScore.phytonutrients },
+  ], [nutritionScore])
 
-  const scaledStats = useMemo(() => [
-    { stat: 'Protein', label: 'Protein Quality', value: Math.min(nutritionScore.proteinQuality * scale, 100) },
-    { stat: 'Micros', label: 'Micronutrient Density', value: Math.min(nutritionScore.micronutrientDensity * scale, 100) },
-    { stat: 'Energy', label: 'Energy Profile', value: Math.min(nutritionScore.energyProfile * scale, 100) },
-    { stat: 'Gut', label: 'Gut Health', value: Math.min(nutritionScore.gutHealth * scale, 100) },
-    { stat: 'Phyto', label: 'Phytonutrients', value: Math.min(nutritionScore.phytonutrients * scale, 100) },
-  ], [nutritionScore, scale])
-
-  const calories = nutritionScore.kcalPer100g ? Math.round(nutritionScore.kcalPer100g * scale) : null
+  const calories = nutritionScore.kcalPer100g ? Math.round(nutritionScore.kcalPer100g * servingG / 100) : null
   const calPct = (calories && userProfile?.tdee) ? (calories / userProfile.tdee * 100) : null
 
   const synergy = nutritionScore.synergyPotential
@@ -171,6 +172,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           />
           <span className="text-xs text-gray-400">g</span>
         </div>
+        <span className="text-[10px] text-gray-500">scales calories — quality stats are per 100g</span>
       </div>
 
       {/* Calories */}
@@ -193,7 +195,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           <RadarChart
             width={420}
             height={340}
-            data={scaledStats}
+            data={stats}
             margin={{ top: 30, right: 80, bottom: 30, left: 80 }}
           >
             <PolarGrid stroke="#374151" />
@@ -218,7 +220,7 @@ export default function FoodCard({ card, userProfile }: Props) {
 
       {/* Stat Bars */}
       <div className="flex flex-col gap-3">
-        {scaledStats.map((d) => (
+        {stats.map((d) => (
           <div key={d.stat}>
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs text-gray-400">{d.label}</span>
