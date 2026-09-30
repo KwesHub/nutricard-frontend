@@ -36,6 +36,8 @@ export interface EnergyBreakdown {
   gi: number
   sugarsG: number
   unsaturatedRatio: number
+  stomachSpeed: number
+  bloodSpeed: number
 }
 
 export interface GutBreakdown {
