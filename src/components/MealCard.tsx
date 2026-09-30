@@ -31,7 +31,7 @@ const timingLabel: Record<string, string> = {
   NEUTRAL: 'Anytime',
 }
 
-export default function MealCard({ result, userProfile: _userProfile }: Props) {
+export default function MealCard({ result }: Props) {
   const { meal, mealScore, foods, nutrientAnalysis } = result
 
   const stats = useMemo(() => [
