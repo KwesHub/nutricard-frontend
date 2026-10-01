@@ -4,6 +4,7 @@ import { API_BASE_URL } from '../config'
 import { formatName, formatRole, roleColor } from '../utils/formatting'
 import Modal from './Modal'
 import MealCard from './MealCard'
+import FoodPhoto from './FoodPhoto'
 
 interface MealItem {
   food: Food
@@ -192,9 +193,12 @@ export default function MealBuilder({ userProfile }: Props) {
               return (
                 <div key={food.id} className="bg-gray-900 rounded-xl p-3 flex flex-col gap-1.5">
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-semibold text-fg leading-tight">
-                      {formatName(food.name)}
-                    </p>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <FoodPhoto name={food.name} className="h-10 w-10 shrink-0 rounded-lg" emojiClass="text-xl" />
+                      <p className="text-sm font-semibold text-fg leading-tight">
+                        {formatName(food.name)}
+                      </p>
+                    </div>
                     {inMeal && (
                       <span className="text-xs text-accent font-medium shrink-0">
                         {currentQty}g

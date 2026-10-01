@@ -79,7 +79,7 @@ export default function FoodList({ userProfile }: Props) {
     { label: 'Base', value: 'BASE', bg: 'bg-amber-800' },
     { label: 'Protein', value: 'PROTEIN', bg: 'bg-red-700' },
     { label: 'Veg & fruit', value: 'VEG_FRUIT', bg: 'bg-emerald-700' },
-    { label: 'Booster', value: 'BOOSTER', bg: 'bg-purple-600' },
+    { label: 'Nuts & seeds', value: 'BOOSTER', bg: 'bg-purple-600' },
     { label: 'Flavour', value: 'FLAVOUR', bg: 'bg-slate-600' },
     { label: 'Treat', value: 'TREAT', bg: 'bg-pink-700' },
   ]

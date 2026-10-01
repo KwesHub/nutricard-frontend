@@ -4,10 +4,11 @@ import { tierFor } from '../utils/tier'
 import BadgeChip from './BadgeChip'
 import FoodPhoto from './FoodPhoto'
 
-const STAT_LABELS: { key: 'protein' | 'micro' | 'energy' | 'gut' | 'phyto'; short: string; full: string }[] = [
+// The four quality stats the overall rating uses. Energy profile only drives timing grades, so it
+// lives on the card's timing section, not here.
+const STAT_LABELS: { key: 'protein' | 'micro' | 'gut' | 'phyto'; short: string; full: string }[] = [
   { key: 'protein', short: 'PRO', full: 'Protein quality' },
   { key: 'micro', short: 'MIC', full: 'Micronutrient density' },
-  { key: 'energy', short: 'ENE', full: 'Energy profile' },
   { key: 'gut', short: 'GUT', full: 'Gut health' },
   { key: 'phyto', short: 'PHY', full: 'Phytonutrients' },
 ]
@@ -65,7 +66,7 @@ export default function FoodTile({ food, loading, onOpen }: Props) {
       )}
 
       {food.stats ? (
-        <dl className="mx-4 mt-3 mb-4 grid grid-cols-5 border-t border-current/30 pt-2 text-center">
+        <dl className="mx-4 mt-3 mb-4 grid grid-cols-4 border-t border-current/30 pt-2 text-center">
           {STAT_LABELS.map(s => (
             <div key={s.key}>
               <dt className={`font-display text-xs font-semibold tracking-widest ${subtext}`}>

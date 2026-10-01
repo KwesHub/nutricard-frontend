@@ -7,12 +7,12 @@ function photoUrl(name: string) {
 }
 
 // Decorative: the food's name is always printed next to it, so the image has an empty alt.
-export default function FoodPhoto({ name, className = '' }: { name: string; className?: string }) {
+export default function FoodPhoto({ name, className = '', emojiClass = 'text-7xl' }: { name: string; className?: string; emojiClass?: string }) {
   const [failed, setFailed] = useState(false)
   return (
     <div className={`flex items-center justify-center overflow-hidden bg-black/10 ${className}`}>
       {failed ? (
-        <span className="text-7xl" aria-hidden="true">{foodIcon(name)}</span>
+        <span className={emojiClass} aria-hidden="true">{foodIcon(name)}</span>
       ) : (
         <img
           src={photoUrl(name)}

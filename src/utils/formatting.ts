@@ -3,7 +3,7 @@ const ROLE_LABELS: Record<string, string> = {
   BASE: 'Base',
   PROTEIN: 'Protein',
   VEG_FRUIT: 'Veg & fruit',
-  BOOSTER: 'Booster',
+  BOOSTER: 'Nuts & seeds',
   FLAVOUR: 'Flavour',
   TREAT: 'Treat',
 }

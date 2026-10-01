@@ -4,13 +4,12 @@ import {
 } from 'recharts'
 import type { Food, CompareResult, LeadingNutrient, TopNutrient } from '../types'
 import { API_BASE_URL } from '../config'
-import { foodIcon } from '../utils/foodIcons'
+import FoodPhoto from './FoodPhoto'
 import { formatName, formatNutrient, formatPctRda, formatRole, roleColor } from '../utils/formatting'
 
 const STATS: { key: keyof CompareResult['foodA']['scores']; label: string; short: string }[] = [
   { key: 'proteinQuality',      label: 'Protein Quality',       short: 'Protein' },
   { key: 'micronutrientDensity',label: 'Micronutrient Density', short: 'Micros'  },
-  { key: 'energyProfile',       label: 'Energy Profile',        short: 'Energy'  },
   { key: 'gutHealth',           label: 'Gut Health',            short: 'Gut'     },
   { key: 'phytonutrients',      label: 'Phytonutrients',        short: 'Phyto'   },
 ]
@@ -160,7 +159,8 @@ export default function FoodCompare() {
               <span className={`inline-block text-xs font-medium text-white px-2 py-0.5 rounded-full mb-2 ${roleColor(result.foodA.role)}`}>
                 {formatRole(result.foodA.role)}
               </span>
-              <p className="text-lg font-bold text-fg leading-tight"><span aria-hidden="true" className="mr-1.5">{foodIcon(result.foodA.name)}</span>{formatName(result.foodA.name)}</p>
+              <FoodPhoto name={result.foodA.name} className="mb-2 h-24 rounded-lg" emojiClass="text-4xl" />
+              <p className="text-lg font-bold text-fg leading-tight">{formatName(result.foodA.name)}</p>
               <div className="flex items-baseline gap-1 mt-2">
                 <span className="text-3xl font-bold text-accent">{result.foodA.scores.overall.toFixed(1)}</span>
                 <span className="text-xs text-gray-400">/ 100</span>
@@ -175,7 +175,8 @@ export default function FoodCompare() {
               <span className={`inline-block text-xs font-medium text-white px-2 py-0.5 rounded-full mb-2 ${roleColor(result.foodB.role)}`}>
                 {formatRole(result.foodB.role)}
               </span>
-              <p className="text-lg font-bold text-fg leading-tight"><span aria-hidden="true" className="mr-1.5">{foodIcon(result.foodB.name)}</span>{formatName(result.foodB.name)}</p>
+              <FoodPhoto name={result.foodB.name} className="mb-2 h-24 rounded-lg" emojiClass="text-4xl" />
+              <p className="text-lg font-bold text-fg leading-tight">{formatName(result.foodB.name)}</p>
               <div className="flex items-baseline gap-1 mt-2">
                 <span className="text-3xl font-bold text-blue-700 dark:text-blue-400">{result.foodB.scores.overall.toFixed(1)}</span>
                 <span className="text-xs text-gray-400">/ 100</span>

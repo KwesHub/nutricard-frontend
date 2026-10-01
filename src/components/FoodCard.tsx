@@ -96,7 +96,6 @@ export default function FoodCard({ card, userProfile }: Props) {
   const stats = useMemo(() => [
     { stat: 'Protein', label: 'Protein Quality', value: nutritionScore.proteinQuality },
     { stat: 'Micros', label: 'Micronutrient Density', value: nutritionScore.micronutrientDensity },
-    { stat: 'Energy', label: 'Energy Profile', value: nutritionScore.energyProfile },
     { stat: 'Gut', label: 'Gut Health', value: nutritionScore.gutHealth },
     { stat: 'Phyto', label: 'Phytonutrients', value: nutritionScore.phytonutrients },
   ], [nutritionScore])
@@ -342,11 +341,15 @@ export default function FoodCard({ card, userProfile }: Props) {
       {/* Best Timing Insight */}
       <div className="mt-3 p-3 bg-gray-800 rounded-lg">
         <div className="flex items-center gap-2 mb-1">
-          <span>🕐</span>
+          <span aria-hidden="true">🕐</span>
           <span className="text-xs font-medium text-gray-300">Best timing:</span>
           <span className="text-xs font-bold text-accent">{bestTimingLabel}</span>
         </div>
         <p className="text-xs text-gray-400">{timingInsights[bestTiming]}</p>
+        <p className="mt-2 text-xs text-gray-400">
+          Energy profile <span className="font-semibold text-fg">{Math.round(nutritionScore.energyProfile)}/100</span>:
+          how quickly this food's energy arrives. It sets the timing grades, not the overall rating.
+        </p>
       </div>
       </div>
     </div>
