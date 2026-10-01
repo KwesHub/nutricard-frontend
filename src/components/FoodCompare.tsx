@@ -101,10 +101,11 @@ export default function FoodCompare() {
     <div className="max-w-3xl mx-auto">
 
       {/* Selectors */}
-      <div className="flex flex-col sm:flex-row gap-3 items-end mb-6">
+      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end mb-6">
         <div className="flex-1">
-          <label className="block text-xs text-gray-500 mb-1.5">Food A</label>
+          <label htmlFor="compare-a" className="block text-xs text-gray-500 mb-1.5">Food A</label>
           <select
+            id="compare-a"
             value={idA}
             onChange={e => { setIdA(e.target.value); setResult(null) }}
             className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-emerald-700 focus:outline-none focus:border-emerald-500 transition-colors"
@@ -119,8 +120,9 @@ export default function FoodCompare() {
         <span className="text-gray-600 font-bold pb-2 hidden sm:block">vs</span>
 
         <div className="flex-1">
-          <label className="block text-xs text-gray-500 mb-1.5">Food B</label>
+          <label htmlFor="compare-b" className="block text-xs text-gray-500 mb-1.5">Food B</label>
           <select
+            id="compare-b"
             value={idB}
             onChange={e => { setIdB(e.target.value); setResult(null) }}
             className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-blue-700 focus:outline-none focus:border-blue-500 transition-colors"
@@ -195,7 +197,11 @@ export default function FoodCompare() {
           </div>
 
           {/* Overlaid radar */}
-          <div className="flex justify-center mb-5">
+          <div
+            role="img"
+            aria-label={`Radar chart comparing ${formatName(result.foodA.name)} and ${formatName(result.foodB.name)}: ${STATS.map(s => `${s.short} ${Math.round(result.foodA.scores[s.key])} versus ${Math.round(result.foodB.scores[s.key])}`).join(', ')}`}
+            className="flex justify-center mb-5"
+          >
             <div style={{ overflowX: 'auto' }}>
               <RadarChart
                 width={420} height={280}

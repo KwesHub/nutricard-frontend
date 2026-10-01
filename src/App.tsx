@@ -13,8 +13,8 @@ function App() {
   const [view, setView] = useState<View>('foods')
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-8">
-      <div className="flex items-start justify-between">
+    <main className="min-h-screen bg-gray-950 text-white p-8">
+      <header className="flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold text-emerald-400">NutriCard</h1>
           <p className="text-gray-400 mt-2">Food intelligence, FIFA style.</p>
@@ -25,11 +25,12 @@ function App() {
         >
           {userProfile ? `${userProfile.tdee.toLocaleString()} kcal` : 'Set Calories'}
         </button>
-      </div>
+      </header>
 
-      <div className="flex gap-1 mt-6 mb-6 bg-gray-900 rounded-xl p-1 w-fit">
+      <nav aria-label="Sections" className="flex gap-1 mt-6 mb-6 bg-gray-900 rounded-xl p-1 w-fit">
         <button
           onClick={() => setView('foods')}
+          aria-current={view === 'foods' ? 'page' : undefined}
           className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
             view === 'foods' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
           }`}
@@ -38,6 +39,7 @@ function App() {
         </button>
         <button
           onClick={() => setView('meal')}
+          aria-current={view === 'meal' ? 'page' : undefined}
           className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
             view === 'meal' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
           }`}
@@ -46,13 +48,14 @@ function App() {
         </button>
         <button
           onClick={() => setView('compare')}
+          aria-current={view === 'compare' ? 'page' : undefined}
           className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
             view === 'compare' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:text-white'
           }`}
         >
           Compare
         </button>
-      </div>
+      </nav>
 
       {view === 'foods' && <FoodList userProfile={userProfile} />}
       {view === 'meal' && <MealBuilder userProfile={userProfile} />}
@@ -67,7 +70,7 @@ function App() {
           }}
         />
       )}
-    </div>
+    </main>
   )
 }
 

@@ -32,6 +32,7 @@ export default function FoodList({ userProfile }: Props) {
   }, [])
 
   function handleViewCard(id: number) {
+    if (loadingId !== null) return
     setLoadingId(id)
     setCardError(null)
     fetch(`${API_BASE_URL}/foods/${id}/card`)
@@ -72,6 +73,7 @@ export default function FoodList({ userProfile }: Props) {
       <input
         type="text"
         placeholder="Search foods..."
+        aria-label="Search foods"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
@@ -83,6 +85,7 @@ export default function FoodList({ userProfile }: Props) {
             <button
               key={r.label}
               onClick={() => setRoleFilter(isActive ? null : r.value)}
+              aria-pressed={isActive}
               className={`px-3 py-1 text-xs font-medium text-white rounded-full transition-opacity ${r.bg} ${
                 isActive ? 'opacity-100' : 'opacity-70'
               }`}
@@ -98,7 +101,18 @@ export default function FoodList({ userProfile }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((food) => (
           <div key={food.id} className="bg-gray-900 rounded-xl p-4 flex flex-col gap-2">
-            <h2 className="text-lg font-bold text-white">{formatName(food.name)}</h2>
+            <div className="flex items-start justify-between gap-2">
+              <h2 className="text-lg font-bold text-white">{formatName(food.name)}</h2>
+              {food.overallScore != null && (
+                <span
+                  className="shrink-0 text-right leading-none"
+                  aria-label={`Overall rating ${Math.round(food.overallScore)} out of 100`}
+                >
+                  <span className="text-2xl font-bold text-white" aria-hidden="true">{Math.round(food.overallScore)}</span>
+                  <span className="text-[10px] text-gray-400 block mt-0.5" aria-hidden="true">OVR</span>
+                </span>
+              )}
+            </div>
             <span className={`self-start text-xs font-medium text-white px-2 py-0.5 rounded-full ${roleColor(food.foodRole)}`}>
               {formatRole(food.foodRole)}
             </span>
@@ -112,8 +126,9 @@ export default function FoodList({ userProfile }: Props) {
             )}
             <button
               onClick={() => handleViewCard(food.id)}
-              disabled={loadingId === food.id}
-              className="mt-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+              aria-disabled={loadingId === food.id}
+              aria-label={`View ${formatName(food.name)} card`}
+              className="mt-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors aria-disabled:opacity-50"
             >
               {loadingId === food.id ? 'Loading…' : 'View Card'}
             </button>
@@ -122,7 +137,7 @@ export default function FoodList({ userProfile }: Props) {
       </div>
 
       {selectedCard && (
-        <Modal onClose={() => setSelectedCard(null)}>
+        <Modal onClose={() => setSelectedCard(null)} label={`${formatName(selectedCard.food.name)} nutrition card`}>
           <FoodCard card={selectedCard} userProfile={userProfile} />
         </Modal>
       )}

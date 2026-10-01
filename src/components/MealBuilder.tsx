@@ -112,6 +112,7 @@ export default function MealBuilder({ userProfile }: Props) {
                 <button
                   key={t.value}
                   onClick={() => setTiming(t.value)}
+                  aria-pressed={timing === t.value}
                   className={`px-2 py-1 text-xs rounded-lg transition-colors ${
                     timing === t.value
                       ? 'bg-emerald-600 text-white'
@@ -127,7 +128,7 @@ export default function MealBuilder({ userProfile }: Props) {
           {/* Items */}
           {mealItems.length === 0 ? (
             <p className="text-xs text-gray-500 text-center py-6">
-              Click foods on the right to add them here
+              Add foods from the list to build your meal
             </p>
           ) : (
             <div className="flex flex-col gap-2 mb-4">
@@ -138,6 +139,7 @@ export default function MealBuilder({ userProfile }: Props) {
                   </span>
                   <input
                     type="number"
+                    aria-label={`${formatName(item.food.name)} grams`}
                     min={1}
                     value={item.quantityG}
                     onChange={e => updateQuantity(item.food.id, Number(e.target.value))}
@@ -220,7 +222,7 @@ export default function MealBuilder({ userProfile }: Props) {
       </div>
 
       {result && (
-        <Modal onClose={() => setResult(null)} maxWidth={640}>
+        <Modal onClose={() => setResult(null)} maxWidth={640} label="Meal score">
           <MealCard result={result} userProfile={userProfile} />
         </Modal>
       )}

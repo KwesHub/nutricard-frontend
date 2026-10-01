@@ -39,7 +39,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
   }
 
   return (
-    <Modal onClose={onClose} maxWidth={480}>
+    <Modal onClose={onClose} maxWidth={480} label="Calorie calculator">
         <h2 className="text-xl font-bold text-white mb-1">TDEE Calculator</h2>
         <p className="text-sm text-gray-400 mb-5">Calculate your daily calorie needs</p>
 

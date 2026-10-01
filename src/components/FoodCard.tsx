@@ -125,7 +125,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           </span>
           <p className="text-sm text-gray-400 mt-1">{formatCategory(food.category)}</p>
         </div>
-        <div className="text-right">
+        <div className="text-right pr-10">
           <span className="text-4xl font-bold text-white">
             {Math.round(nutritionScore.overallScore)}
           </span>
@@ -168,6 +168,7 @@ export default function FoodCard({ card, userProfile }: Props) {
         <div className="flex items-center gap-1">
           <input
             type="number"
+            aria-label="Serving size in grams"
             value={servingG}
             onChange={(e) => setServingG(Math.max(0, Number(e.target.value)))}
             className="w-16 px-2 py-1 text-sm rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors text-center"
@@ -192,7 +193,11 @@ export default function FoodCard({ card, userProfile }: Props) {
       )}
 
       {/* Radar Chart */}
-      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <div
+        role="img"
+        aria-label={`Radar chart: ${stats.map(d => `${d.label} ${Math.round(d.value)}`).join(', ')}`}
+        style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
+      >
         <div style={{ overflowX: 'auto' }}>
           <RadarChart
             width={420}

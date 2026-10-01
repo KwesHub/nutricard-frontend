@@ -12,6 +12,7 @@ export interface Food {
   foodRole: string
   servingSizeG: number
   badges?: Badge[]
+  overallScore?: number | null
 }
 
 export type TimingContext = 'MORNING' | 'PRE_WORKOUT' | 'POST_WORKOUT' | 'EVENING' | 'NEUTRAL'
