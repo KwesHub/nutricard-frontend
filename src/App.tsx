@@ -29,9 +29,9 @@ function App() {
 
   return (
     <main className="min-h-screen bg-page text-fg p-4 sm:p-8">
-      <header className="flex items-start justify-between">
+      <header className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="font-display text-5xl font-bold uppercase tracking-wide text-accent">NutriCard</h1>
+          <h1 className="font-display text-4xl sm:text-5xl font-bold uppercase tracking-wide text-accent">NutriCard</h1>
           <p className="text-gray-400 mt-2">Food intelligence, FIFA style.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -43,7 +43,7 @@ function App() {
           <span aria-hidden="true">{dark ? '☾' : '☀'}</span> Dark mode</button>
         <button
           onClick={() => setShowTDEE(true)}
-          className="bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+          className="bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors whitespace-nowrap"
         >
           {userProfile ? `${userProfile.tdee.toLocaleString()} kcal` : 'Set Calories'}
         </button>
