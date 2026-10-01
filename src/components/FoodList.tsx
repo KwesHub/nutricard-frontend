@@ -97,10 +97,12 @@ export default function FoodList({ userProfile }: Props) {
       <details className="mb-4 text-sm text-gray-400">
         <summary className="cursor-pointer text-accent hover:text-emerald-900 dark:hover:text-emerald-300">How do scores work?</summary>
         <p className="mt-2 max-w-2xl">
-          Every food gets five 0–100 stats (protein quality, micronutrient density, energy profile, gut
-          health, phytonutrients) and an overall rating built from its four best stats. Stats describe
-          100g of the food, not a serving. Micronutrient density is nutrients per calorie, so a spinach
-          leaf can out-score peanut butter without being a meal. 50 is solid, 80+ is exceptional.
+          Every food is rated 0 to 100 on protein quality, micronutrient density, gut health and
+          phytonutrients. The overall rating comes from its two best, so a food isn't marked down for
+          something it was never for: salmon isn't penalised for having no fibre. Stats describe 100g of
+          the food, not a serving. Micronutrient density is nutrients per calorie, which is why spinach
+          beats peanut butter. Energy profile isn't part of the rating; it sets the timing grades on
+          each card. Elite is 80 and up, Gold 70, Silver 55.
         </p>
       </details>
       <div className="flex flex-wrap gap-2 mb-4">

@@ -112,7 +112,7 @@ export default function MealCard({ result }: Props) {
         </p>
         {synergies.length === 0 ? (
           <p className="text-xs text-gray-400">
-            No synergies detected — try combining fish with garlic, or adding vitamin C-rich foods alongside iron sources.
+            No pairings found. Try fish with garlic, or a vitamin C food such as pepper or kiwi alongside beans, lentils or spinach.
           </p>
         ) : (
           <ul className="flex flex-col gap-1.5">
@@ -134,14 +134,14 @@ export default function MealCard({ result }: Props) {
           </p>
           {nutrientAnalysis.gaps.length === 0 ? (
             <p className="text-xs text-accent">
-              This meal touches every nutrient we track — nicely balanced.
+              This meal covers at least 10% of every nutrient we track.
             </p>
           ) : (
             <>
               {dailyGaps.length > 0 && (
                 <>
                   <p className="text-xs text-gray-400 mb-2">
-                    Worth covering today — these don't store in the body:
+                    Worth covering today, because the body doesn't store these:
                   </p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {dailyGaps.map(g => <GapChip key={g.name} gap={g} />)}
@@ -151,7 +151,7 @@ export default function MealCard({ result }: Props) {
               {weeklyGaps.length > 0 && (
                 <>
                   <p className="text-xs text-gray-400 mb-2">
-                    Fine to cover across the week — the body stores these (e.g. oily fish twice a week handles omega-3s):
+                    Fine to cover across the week, because the body stores these (oily fish twice a week covers omega-3s, for example):
                   </p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {weeklyGaps.map(g => <GapChip key={g.name} gap={g} />)}

@@ -32,11 +32,11 @@ const timingTabs: { key: TimingContext; label: string }[] = [
 // Copy explains the gastric-emptying reasoning behind each grade, so the rating reads as
 // justified rather than arbitrary (fat/fibre/protein slow the stomach; GI drives blood sugar).
 const timingInsights: Record<TimingContext, string> = {
-  MORNING: 'Slow-release fuel — fat, fibre and protein keep it in the stomach longer for steady all-morning energy.',
-  PRE_WORKOUT: 'Rocket fuel — low fat and fibre so it clears the stomach fast, with higher-GI carbs for quick blood glucose.',
+  MORNING: 'Slow-release fuel. Fat, fibre and protein keep it in the stomach longer, for steady energy all morning.',
+  PRE_WORKOUT: 'Fast fuel. Little fat or fibre, so it leaves the stomach quickly, and its carbs reach the blood fast.',
   POST_WORKOUT: 'Quick-delivered carbs plus protein to refill glycogen and kick off muscle repair.',
-  EVENING: 'Light on the stomach but low-GI — settles easily for sleep without a blood-sugar spike.',
-  NEUTRAL: 'Balanced fuel with no strong pre- or post-workout skew — fine whenever.',
+  EVENING: 'Light on the stomach and slow on blood sugar, so it settles easily before sleep.',
+  NEUTRAL: 'Balanced fuel that suits any time of day.',
 }
 
 interface Props {
@@ -106,10 +106,10 @@ export default function FoodCard({ card, userProfile }: Props) {
   const synergy = nutritionScore.synergyPotential
   const synergyColor = synergy >= 70 ? 'text-green-800 dark:text-green-400' : synergy >= 40 ? 'text-amber-800 dark:text-amber-400' : 'text-red-700 dark:text-red-400'
   const synergyDesc = synergy >= 70
-    ? 'Highly versatile — combines well with many foods'
+    ? 'Combines well with many foods'
     : synergy >= 40
-      ? 'Moderate synergy — works well in balanced meals'
-      : 'Best as a standalone — limited combination benefit'
+      ? 'Works well in balanced meals'
+      : 'Gains little from being combined'
 
   const bestTimingLabel = timingTabs.find(t => t.key === bestTiming)!.label
   const tier = tierFor(nutritionScore.overallScore)
@@ -190,7 +190,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           />
           <span className="text-xs text-gray-400">g</span>
         </div>
-        <span className="text-[10px] text-gray-400">scales calories — quality stats are per 100g</span>
+        <span className="text-[10px] text-gray-400">changes the calories only; the stats are per 100g</span>
       </div>
 
       {/* Calories */}
