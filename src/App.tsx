@@ -13,10 +13,10 @@ function App() {
   const [view, setView] = useState<View>('foods')
 
   return (
-    <main className="min-h-screen bg-gray-950 text-white p-8">
+    <main className="min-h-screen bg-ink text-white p-4 sm:p-8">
       <header className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-emerald-400">NutriCard</h1>
+          <h1 className="font-display text-5xl font-bold uppercase tracking-wide text-emerald-400">NutriCard</h1>
           <p className="text-gray-400 mt-2">Food intelligence, FIFA style.</p>
         </div>
         <button

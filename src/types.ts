@@ -13,6 +13,7 @@ export interface Food {
   servingSizeG: number
   badges?: Badge[]
   overallScore?: number | null
+  stats?: { protein: number; micro: number; energy: number; gut: number; phyto: number } | null
 }
 
 export type TimingContext = 'MORNING' | 'PRE_WORKOUT' | 'POST_WORKOUT' | 'EVENING' | 'NEUTRAL'

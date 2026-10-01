@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import type { Food, FoodCard as FoodCardType, UserProfile } from '../types'
-import { formatRole, formatCategory, formatName, roleColor } from '../utils/formatting'
+import { formatName } from '../utils/formatting'
 import { API_BASE_URL } from '../config'
 import FoodCard from './FoodCard'
-import BadgeChip from './BadgeChip'
 import Modal from './Modal'
-import { foodIcon } from '../utils/foodIcons'
+import FoodTile from './FoodTile'
+import { TIERS, tierFor } from '../utils/tier'
+import type { TierKey } from '../utils/tier'
 
 interface Props {
   userProfile: UserProfile | null
@@ -17,6 +18,7 @@ export default function FoodList({ userProfile }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [roleFilter, setRoleFilter] = useState<string | null>(null)
+  const [tierFilter, setTierFilter] = useState<TierKey | null>(null)
   const [sortBy, setSortBy] = useState<'default' | 'rating' | 'name'>('default')
   const [selectedCard, setSelectedCard] = useState<FoodCardType | null>(null)
   const [loadingId, setLoadingId] = useState<number | null>(null)
@@ -58,7 +60,8 @@ export default function FoodList({ userProfile }: Props) {
       f.category.toLowerCase().includes(q) ||
       f.foodRole.toLowerCase().includes(q)
     const matchesRole = !roleFilter || f.foodRole === roleFilter
-    return matchesSearch && matchesRole
+    const matchesTier = !tierFilter || (f.overallScore != null && tierFor(f.overallScore).key === tierFilter)
+    return matchesSearch && matchesRole && matchesTier
   })
   if (sortBy === 'rating') {
     filtered.sort((a, b) => (b.overallScore ?? -1) - (a.overallScore ?? -1))
@@ -111,7 +114,24 @@ export default function FoodList({ userProfile }: Props) {
           )
         })}
       </div>
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <span className="text-xs text-gray-400">Card tier</span>
+        {TIERS.map((t) => {
+          const isActive = tierFilter === t.key
+          return (
+            <button
+              key={t.key}
+              onClick={() => setTierFilter(isActive ? null : t.key)}
+              aria-pressed={isActive}
+              className={`px-3 py-1 text-xs font-semibold rounded-full ${t.chip} ${
+                isActive ? 'ring-2 ring-white' : 'opacity-80 hover:opacity-100'
+              }`}
+            >
+              {t.label} <span className="font-normal">{t.range}</span>
+            </button>
+          )
+        })}
+        <span className="mx-1 hidden sm:inline text-gray-700" aria-hidden="true">|</span>
         <label htmlFor="food-sort" className="text-xs text-gray-400">Sort by</label>
         <select
           id="food-sort"
@@ -127,46 +147,19 @@ export default function FoodList({ userProfile }: Props) {
       {cardError && (
         <p className="mb-3 text-sm text-red-400">Failed to load card: {cardError}</p>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {filtered.map((food) => (
-          <div key={food.id} className="bg-gray-900 rounded-xl p-4 flex flex-col gap-2">
-            <div className="flex items-start justify-between gap-2">
-              <h2 className="text-lg font-bold text-white">
-                <span aria-hidden="true" className="mr-2">{foodIcon(food.name)}</span>
-                {formatName(food.name)}
-              </h2>
-              {food.overallScore != null && (
-                <span
-                  className="shrink-0 text-right leading-none"
-                  aria-label={`Overall rating ${Math.round(food.overallScore)} out of 100`}
-                >
-                  <span className="text-2xl font-bold text-white" aria-hidden="true">{Math.round(food.overallScore)}</span>
-                  <span className="text-[10px] text-gray-400 block mt-0.5" aria-hidden="true">OVR</span>
-                </span>
-              )}
-            </div>
-            <span className={`self-start text-xs font-medium text-white px-2 py-0.5 rounded-full ${roleColor(food.foodRole)}`}>
-              {formatRole(food.foodRole)}
-            </span>
-            <p className="text-sm text-gray-400">{formatCategory(food.category)}</p>
-            {food.badges && food.badges.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {food.badges.map((b) => (
-                  <BadgeChip key={`${b.kind}-${b.label}`} badge={b} />
-                ))}
-              </div>
-            )}
-            <button
-              onClick={() => handleViewCard(food.id)}
-              aria-disabled={loadingId === food.id}
-              aria-label={`View ${formatName(food.name)} card`}
-              className="mt-auto bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors aria-disabled:opacity-50"
-            >
-              {loadingId === food.id ? 'Loading…' : 'View Card'}
-            </button>
-          </div>
+          <FoodTile
+            key={food.id}
+            food={food}
+            loading={loadingId === food.id}
+            onOpen={() => handleViewCard(food.id)}
+          />
         ))}
       </div>
+      {filtered.length === 0 && (
+        <p className="text-gray-400">No foods match those filters. Clear the search or pick a different tier.</p>
+      )}
 
       {selectedCard && (
         <Modal onClose={() => setSelectedCard(null)} label={`${formatName(selectedCard.food.name)} nutrition card`}>
