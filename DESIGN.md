@@ -135,11 +135,11 @@ A near-black navy page, grey surfaces, one emerald accent, and four metallic tie
 - **Emerald Deep** (#065f46): button hover and pressed states.
 
 ### Secondary (card tiers)
-- **Bronze** (#d9a273): overall under 60. Gradient #e6b48a → #b97c4f. Text #2b1608.
+- **Bronze** (#d9a273): overall under 55. Gradient #e6b48a → #b97c4f. Text #2b1608.
   (Tier colours are tokens in `tailwind.config.js`: `bronze`, `silver`, `gold`, `elite`, each with `light`, `DEFAULT`, `dark` and `ink`. They are identical in both themes.)
-- **Silver** (#cfd6de): overall 60 to 74. Gradient #eef1f5 → #a6b0bc. Text #141a22.
-- **Gold** (#e8bf4a): overall 75 to 84. Gradient #f7d676 → #c9972a. Text #2a1d00.
-- **Elite** (#2b2a7a to #0f766e): overall 85 and above. Indigo-to-teal gradient from #3b3aa8. White text.
+- **Silver** (#cfd6de): overall 55 to 69. Gradient #eef1f5 → #a6b0bc. Text #141a22.
+- **Gold** (#e8bf4a): overall 70 to 79. Gradient #f7d676 → #c9972a. Text #2a1d00.
+- **Elite** (#2b2a7a to #0f766e): overall 80 and above. Indigo-to-teal gradient from #3b3aa8. White text.
 
 ### Tertiary (meaning colours)
 - **Role chips**: Eat daily emerald (#059669), 2–3× a week blue (#2563eb), Small boost purple (#9333ea), Flavour staple grey (#4b5563), Treat amber (#b45309). All white-text fills measure at least 5.0:1.
@@ -159,7 +159,7 @@ The interface has a dark and a light theme, switched by the "Dark mode" button a
 - Tier cards and the badge band do not change between themes.
 
 ### Named Rules
-**The Tier Is Earned Rule.** A card's tier comes only from its overall rating (Bronze under 60, Silver 60–74, Gold 75–84, Elite 85+). Never recolour a card for emphasis, and never use tier colours on interface chrome.
+**The Tier Is Earned Rule.** A card's tier comes only from its overall rating (Bronze under 55, Silver 55–69, Gold 70–79, Elite 80+). Never recolour a card for emphasis, and never use tier colours on interface chrome.
 
 **The One Voice Rule.** Emerald is the only accent on the interface itself. A screen has a handful of emerald elements, not a wash of them.
 

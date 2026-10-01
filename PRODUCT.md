@@ -28,7 +28,7 @@ No accounts, no login, no pagination. The only personal input is the optional ca
 
 - 41 seeded foods. Stats describe 100g of a food, not a serving; the serving-size box scales calories only.
 - Micronutrient density is nutrients per 100 kcal, scored on a saturating curve so no food reaches 100.
-- Cards are tiered by overall rating: Bronze (under 60), Silver (60-74), Gold (75-84), Elite (85+).
+- Cards are tiered by overall rating: Bronze (under 55), Silver (55-69), Gold (70-79), Elite (80+).
 - Foods eaten for taste (garlic, honey) have no time-of-day grades.
 - A planned page that teaches what micronutrients do and what the scores mean. Not built yet; scope undecided.
 - The API deploys to Railway on a push to its `master`; the frontend deploys to Vercel on a push to `main`. The owner pushes deliberately.

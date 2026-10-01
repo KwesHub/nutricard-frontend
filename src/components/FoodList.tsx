@@ -12,6 +12,8 @@ interface Props {
   userProfile: UserProfile | null
 }
 
+type SortKey = 'default' | 'rating' | 'name' | 'protein' | 'micro' | 'gut' | 'phyto' | 'energy'
+
 export default function FoodList({ userProfile }: Props) {
   const [foods, setFoods] = useState<Food[]>([])
   const [loading, setLoading] = useState(true)
@@ -19,7 +21,7 @@ export default function FoodList({ userProfile }: Props) {
   const [search, setSearch] = useState('')
   const [roleFilter, setRoleFilter] = useState<string | null>(null)
   const [tierFilter, setTierFilter] = useState<TierKey | null>(null)
-  const [sortBy, setSortBy] = useState<'default' | 'rating' | 'name'>('default')
+  const [sortBy, setSortBy] = useState<SortKey>('default')
   const [selectedCard, setSelectedCard] = useState<FoodCardType | null>(null)
   const [loadingId, setLoadingId] = useState<number | null>(null)
   const [cardError, setCardError] = useState<string | null>(null)
@@ -63,10 +65,12 @@ export default function FoodList({ userProfile }: Props) {
     const matchesTier = !tierFilter || (f.overallScore != null && tierFor(f.overallScore).key === tierFilter)
     return matchesSearch && matchesRole && matchesTier
   })
-  if (sortBy === 'rating') {
-    filtered.sort((a, b) => (b.overallScore ?? -1) - (a.overallScore ?? -1))
-  } else if (sortBy === 'name') {
+  if (sortBy === 'name') {
     filtered.sort((a, b) => a.name.localeCompare(b.name))
+  } else if (sortBy !== 'default') {
+    // Foods without a score yet (mid warm-up) sort last
+    const value = (f: Food) => (sortBy === 'rating' ? f.overallScore : f.stats?.[sortBy]) ?? -1
+    filtered.sort((a, b) => value(b) - value(a))
   }
 
   const roles: { label: string; value: string | null; bg: string }[] = [
@@ -140,6 +144,11 @@ export default function FoodList({ userProfile }: Props) {
         >
           <option value="default">Default</option>
           <option value="rating">Top rated</option>
+          <option value="protein">Protein quality</option>
+          <option value="micro">Micronutrient density</option>
+          <option value="gut">Gut health</option>
+          <option value="phyto">Phytonutrients</option>
+          <option value="energy">Energy profile</option>
           <option value="name">A–Z</option>
         </select>
       </div>

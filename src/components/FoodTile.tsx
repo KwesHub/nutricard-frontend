@@ -60,6 +60,10 @@ export default function FoodTile({ food, loading, onOpen }: Props) {
         </button>
       </h2>
 
+      {food.foodRole === 'PANTRY' && (
+        <p className={`px-4 pt-1 text-xs ${subtext}`}>Rated per 100g, used in small amounts</p>
+      )}
+
       {food.stats ? (
         <dl className="mx-4 mt-3 mb-4 grid grid-cols-5 border-t border-current/30 pt-2 text-center">
           {STAT_LABELS.map(s => (

@@ -142,6 +142,9 @@ export default function FoodCard({ card, userProfile }: Props) {
         <h2 className="mt-3 font-display text-4xl font-bold uppercase leading-none tracking-wide">
           {formatName(food.name)}
         </h2>
+        {food.foodRole === 'PANTRY' && (
+          <p className={`mt-1 text-xs ${tier.subtext}`}>Rated per 100g, used in small amounts</p>
+        )}
       </div>
 
       <div className="p-6">

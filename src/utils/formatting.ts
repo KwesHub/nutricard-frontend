@@ -36,7 +36,7 @@ const NUTRIENT_LABELS: Record<string, string> = {
   iron: 'Iron', magnesium: 'Magnesium', phosphorus: 'Phosphorus',
   potassium: 'Potassium', zinc: 'Zinc', selenium: 'Selenium', copper: 'Copper',
   choline: 'Choline', pantothenicAcid: 'Pantothenic acid (B5)', biotin: 'Biotin',
-  manganese: 'Manganese', iodine: 'Iodine', epa: 'EPA (omega-3)', dha: 'DHA (omega-3)',
+  manganese: 'Manganese', iodine: 'Iodine', epa: 'EPA (omega-3)', dha: 'DHA (omega-3)', fibre: 'Fibre',
 }
 
 export const formatNutrient = (key: string) => NUTRIENT_LABELS[key] ?? key

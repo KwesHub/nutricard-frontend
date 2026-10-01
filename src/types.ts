@@ -45,6 +45,7 @@ export interface EnergyBreakdown {
 export interface GutBreakdown {
   fibreG: number
   prebioticBonus: number
+  probioticBonus: number
   antiNutrientPenalty: number
   omega3Bonus: number
 }
