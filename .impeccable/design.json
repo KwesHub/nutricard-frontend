@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-01T09:50:12+01:00",
+  "title": "Design System: NutriCard",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink Navy",
+        "canonical": "#0b1120",
+        "tonalRamp": [
+          "#141e39",
+          "#233666",
+          "#334f94",
+          "#4568bf",
+          "#738dcf",
+          "#a0b2de",
+          "#c6d1eb",
+          "#ecf0f8"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#111827",
+        "tonalRamp": [
+          "#172135",
+          "#2a3b60",
+          "#3c558b",
+          "#5170b3",
+          "#7c93c6",
+          "#a6b6d8",
+          "#cad3e8",
+          "#edf0f7"
+        ]
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "Surface Raised",
+        "canonical": "#1f2937",
+        "tonalRamp": [
+          "#1c2431",
+          "#324258",
+          "#485f7f",
+          "#5f7ca5",
+          "#869cbb",
+          "#adbcd1",
+          "#ced7e3",
+          "#eff2f6"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#374151",
+        "tonalRamp": [
+          "#1f252e",
+          "#384252",
+          "#505f76",
+          "#6a7d9a",
+          "#8f9cb3",
+          "#b3bccb",
+          "#d1d7e0",
+          "#f0f2f5"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Text",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#454545",
+          "#636363",
+          "#828282",
+          "#a1a1a1",
+          "#bfbfbf",
+          "#d9d9d9",
+          "#f2f2f2"
+        ]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Text Muted",
+        "canonical": "#9ca3af",
+        "tonalRamp": [
+          "#22252a",
+          "#3e434c",
+          "#59616e",
+          "#757f8f",
+          "#979eab",
+          "#b8bdc6",
+          "#d5d8dd",
+          "#f1f2f4"
+        ]
+      },
+      "emerald-bright": {
+        "role": "primary",
+        "displayName": "Emerald Bright",
+        "canonical": "#34d399",
+        "tonalRamp": [
+          "#0e3f2d",
+          "#197151",
+          "#23a375",
+          "#32d298",
+          "#64ddb1",
+          "#96e8ca",
+          "#c0f1df",
+          "#eafaf4"
+        ]
+      },
+      "emerald": {
+        "role": "primary",
+        "displayName": "Emerald",
+        "canonical": "#10b981",
+        "tonalRamp": [
+          "#064631",
+          "#0b7f58",
+          "#10b780",
+          "#19eba5",
+          "#51f0bb",
+          "#8af5d1",
+          "#b9f9e4",
+          "#e8fdf6"
+        ]
+      },
+      "emerald-deep": {
+        "role": "primary",
+        "displayName": "Emerald Deep",
+        "canonical": "#059669",
+        "tonalRamp": [
+          "#024a34",
+          "#04855d",
+          "#06c087",
+          "#0df7ae",
+          "#48f9c2",
+          "#84fbd6",
+          "#b5fde6",
+          "#e6fef7"
+        ]
+      },
+      "tier-bronze": {
+        "role": "secondary",
+        "displayName": "Bronze",
+        "canonical": "#d9a273",
+        "tonalRamp": [
+          "#3c2510",
+          "#6c421d",
+          "#9c5f2a",
+          "#ca7c3a",
+          "#d79c6b",
+          "#e4bc9b",
+          "#efd7c3",
+          "#faf2eb"
+        ]
+      },
+      "tier-silver": {
+        "role": "secondary",
+        "displayName": "Silver",
+        "canonical": "#cfd6de",
+        "tonalRamp": [
+          "#1f262d",
+          "#384452",
+          "#516276",
+          "#6b8199",
+          "#8f9fb2",
+          "#b3becb",
+          "#d2d8e0",
+          "#f0f2f5"
+        ]
+      },
+      "tier-gold": {
+        "role": "secondary",
+        "displayName": "Gold",
+        "canonical": "#e8bf4a",
+        "tonalRamp": [
+          "#443409",
+          "#7a5e10",
+          "#b08916",
+          "#e3b121",
+          "#eac458",
+          "#f1d78e",
+          "#f6e7bb",
+          "#fcf7e8"
+        ]
+      },
+      "tier-elite": {
+        "role": "secondary",
+        "displayName": "Elite Indigo",
+        "canonical": "#2b2a7a",
+        "tonalRamp": [
+          "#141439",
+          "#242366",
+          "#343394",
+          "#4745bf",
+          "#7473cf",
+          "#a1a0de",
+          "#c7c6eb",
+          "#ececf8"
+        ]
+      },
+      "tier-elite-glow": {
+        "role": "secondary",
+        "displayName": "Elite Teal",
+        "canonical": "#0f766e",
+        "tonalRamp": [
+          "#09443f",
+          "#107a72",
+          "#16b0a5",
+          "#21e3d4",
+          "#58eade",
+          "#8ef1e9",
+          "#bbf6f2",
+          "#e8fcfb"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Overall rating on a card."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Food names and the wordmark."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Stat abbreviations and tier names."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-rest",
+        "value": "0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4)",
+        "purpose": "Grid cards at rest."
+      },
+      {
+        "name": "popover",
+        "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+        "purpose": "Badge detail popovers."
+      }
+    ],
+    "motion": [
+      {
+        "name": "card-lift",
+        "value": "transform 200ms; translateY(-4px) on hover; none under prefers-reduced-motion",
+        "purpose": "Card hover."
+      },
+      {
+        "name": "colour-fade",
+        "value": "150ms colour transition",
+        "purpose": "Button and chip state changes."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action on a screen, e.g. Set Calories.",
+      "html": "<button class=\"ds-btn-primary\">Set Calories</button>",
+      "css": ".ds-btn-primary{background:#10b981;color:#fff;padding:8px 16px;border:0;border-radius:8px;font:500 14px 'DM Sans',system-ui,sans-serif;transition:background .15s}.ds-btn-primary:hover{background:#059669}.ds-btn-primary:focus-visible{outline:2px solid #fff;outline-offset:2px}"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Text field for searching foods.",
+      "html": "<input class=\"ds-input\" placeholder=\"Search foods...\" aria-label=\"Search foods\">",
+      "css": ".ds-input{width:260px;padding:8px 16px;background:#1f2937;color:#fff;border:1px solid #374151;border-radius:8px;font:14px 'DM Sans',system-ui,sans-serif}.ds-input::placeholder{color:#9ca3af}.ds-input:focus{outline:none;border-color:#10b981}"
+    },
+    {
+      "name": "Section Nav",
+      "kind": "nav",
+      "refersTo": "tab-active",
+      "description": "Segmented bar switching Foods, Meal Builder and Compare.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-nav-on\" aria-current=\"page\">Food Database</button><button>Meal Builder</button><button>Compare</button></nav>",
+      "css": ".ds-nav{display:inline-flex;gap:4px;padding:4px;background:#111827;border-radius:12px}.ds-nav button{padding:8px 20px;border:0;border-radius:8px;background:transparent;color:#9ca3af;font:500 14px 'DM Sans',system-ui,sans-serif}.ds-nav button:hover{color:#fff}.ds-nav .ds-nav-on{background:#059669;color:#fff}"
+    },
+    {
+      "name": "Tier Chip",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Filters the grid by card tier; selected state gets a white ring.",
+      "html": "<span class=\"ds-chip ds-chip-gold\">Gold <small>75–84</small></span>",
+      "css": ".ds-chip{display:inline-block;padding:4px 12px;border-radius:9999px;font:600 12px 'DM Sans',system-ui,sans-serif}.ds-chip small{font-weight:400}.ds-chip-gold{background:#e8bf4a;color:#2a1d00;box-shadow:0 0 0 2px #fff}"
+    },
+    {
+      "name": "Gold Food Card",
+      "kind": "card",
+      "refersTo": "card-gold",
+      "description": "The signature unit: rating, photo slot, name, five-stat strip and a dark badge band.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-top\"><b class=\"ds-ovr\">79</b><span class=\"ds-tier\">GOLD</span></div><div class=\"ds-photo\">🧄</div><h3 class=\"ds-name\">Garlic</h3><div class=\"ds-stats\"><span>PRO<b>39</b></span><span>MIC<b>51</b></span><span>ENE<b>79</b></span><span>GUT<b>38</b></span><span>PHY<b>92</b></span></div><div class=\"ds-band\">Manganese · Vitamin B6</div></article>",
+      "css": ".ds-card{width:240px;overflow:hidden;border-radius:16px;background:linear-gradient(135deg,#f7d676,#e8bf4a,#c9972a);color:#2a1d00;box-shadow:0 10px 15px -3px rgba(0,0,0,.4);font-family:'DM Sans',system-ui,sans-serif;transition:transform .2s}.ds-card:hover{transform:translateY(-4px)}.ds-top{padding:12px 16px 0}.ds-ovr{display:block;font:700 60px/1 'Barlow Condensed',Impact,sans-serif}.ds-tier{font:600 14px 'Barlow Condensed',Impact,sans-serif;letter-spacing:.1em}.ds-photo{margin:8px 16px 0;height:100px;display:flex;align-items:center;justify-content:center;font-size:48px;background:rgba(0,0,0,.1);border-radius:12px}.ds-name{margin:12px 16px 0;font:700 30px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.025em}.ds-stats{display:grid;grid-template-columns:repeat(5,1fr);margin:12px 16px 16px;padding-top:8px;border-top:1px solid rgba(42,29,0,.3);text-align:center;font:600 12px 'Barlow Condensed',Impact,sans-serif;letter-spacing:.1em}.ds-stats b{display:block;font-size:24px;letter-spacing:0}.ds-band{background:#0b1120;color:#fff;padding:12px 16px;font-size:12px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Matchday Programme",
+    "overview": "NutriCard looks like the programme you are handed at a ground on match day: foods are the players, the stats are the story, and a metallic card tells you at a glance who is Elite and who is a Bronze. A dark page keeps the cards bright, and condensed sports type carries every number and name. The tone is confident and tactile, never decorative: solid fills, clear selected states, big numbers.\n\nThe system serves two readers at once. A beginner should understand the grid in seconds (rating, tier, name, five stats). A gym-goer gets depth one layer down (card modal, Compare, Meal Builder). Rarity does the first job; plain-language labels do the second. Scores are honest by design, so nothing in the interface may imply medical advice or dress a low score up as a high one.\n\nThe dark page is the current implementation, not a binding identity choice. Only the football-card concept and WCAG AA are binding (see PRODUCT.md).",
+    "keyCharacteristics": [
+      "Four rarity tiers (Bronze, Silver, Gold, Elite) give every food a visible rank.",
+      "Condensed display type for numbers and names; a humanist sans for everything you read.",
+      "Flat page and controls; only cards cast shadow and lift on hover.",
+      "Dark ink text on the three light tiers, white on Elite, every pairing AA.",
+      "Emerald is the single interface accent. Tier colours belong to cards only."
+    ],
+    "rules": [
+      {
+        "name": "The Tier Is Earned Rule",
+        "body": "A card's tier comes only from its overall rating (Bronze under 60, Silver 60–74, Gold 75–84, Elite 85+). Never recolour a card for emphasis, and never use tier colours on interface chrome.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Voice Rule",
+        "body": "Emerald is the only accent on the interface itself. A screen has a handful of emerald elements, not a wash of them.",
+        "section": "colors"
+      },
+      {
+        "name": "The Pair Rule",
+        "body": "Every tier face is paired with its own text colour. Don't put white text on Silver or Gold, or dark text on Elite.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numbers Are Condensed Rule",
+        "body": "Any figure the user compares (rating, stat value, calories) is set in Barlow Condensed. Prose and controls are never condensed.",
+        "section": "typography"
+      },
+      {
+        "name": "The Spell-It-Out Rule",
+        "body": "Abbreviations such as PRO and MIC are visual shorthand only. Each carries a screen-reader label with the full name, and the full name appears wherever there is room.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-Page Rule",
+        "body": "Only cards and popovers may have a shadow. If something else seems to need one, it needs a surface tone instead.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** set every comparable number in Barlow Condensed.",
+      "**Do** keep text on a tier face in that tier's paired ink colour (#2b1608, #141a22, #2a1d00, or white on Elite).",
+      "**Do** keep small secondary text at gray-400 (#9ca3af) or lighter on dark surfaces.",
+      "**Do** give every control a visible label or `aria-label` that names what it acts on (\"Sardines\", not \"View Card\").",
+      "**Do** respect reduced motion: no hover lift or movement when the user asks for less.",
+      "**Do** keep explanations short and plain; explain what a number means and what it does not."
+    ],
+    "donts": [
+      "**Don't** colour interface elements with tier colours or recolour a card to draw attention.",
+      "**Don't** add shadows to buttons, chips, inputs or the page.",
+      "**Don't** spread emerald across a screen; it is the one accent.",
+      "**Don't** present a score as health or medical advice, or word a low score to sound better than it is.",
+      "**Don't** drop below WCAG AA contrast, or rely on colour alone to carry meaning."
+    ]
+  }
+}
