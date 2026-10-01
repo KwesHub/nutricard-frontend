@@ -1,6 +1,6 @@
 export interface Badge {
   label: string
-  kind: 'strength' | 'rare' | 'watch' | 'cap'
+  kind: 'strength' | 'rare' | 'watch' | 'cap' | 'info'
   detail?: string | null
 }
 

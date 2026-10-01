@@ -22,9 +22,10 @@ interface Props {
 export default function FoodTile({ food, loading, onOpen }: Props) {
   const overall = food.overallScore
   const tier = overall != null ? tierFor(overall) : null
+  // Not scored yet: a plain surface with theme text colours (white text vanished in light mode)
   const face = tier ? tier.face : 'bg-gray-800'
-  const text = tier ? tier.text : 'text-white'
-  const subtext = tier ? tier.subtext : 'text-gray-300'
+  const text = tier ? tier.text : 'text-fg'
+  const subtext = tier ? tier.subtext : 'text-gray-400'
 
   return (
     <article
@@ -81,11 +82,12 @@ export default function FoodTile({ food, loading, onOpen }: Props) {
         <p className={`mx-4 mt-3 mb-4 border-t border-current/30 pt-2 text-xs ${subtext}`}>Scores are still being calculated.</p>
       )}
 
+      {/* Always-dark band: use fixed slate colours, not the themed gray scale (which turns dark in light mode) */}
       <div className="relative z-10 mt-auto flex min-h-[3.25rem] flex-wrap content-center gap-1.5 bg-ink/90 px-4 py-3 text-white">
-        {loading && <span className="text-xs text-gray-300">Opening card…</span>}
+        {loading && <span className="text-xs text-slate-300">Opening card…</span>}
         {!loading && food.badges && food.badges.length > 0
           ? food.badges.map(b => <BadgeChip key={`${b.kind}-${b.label}`} badge={b} onDark />)
-          : !loading && <span className="text-xs text-gray-400">Open the card for the full breakdown</span>}
+          : !loading && <span className="text-xs text-slate-300">Open the card for the full breakdown</span>}
       </div>
     </article>
   )
