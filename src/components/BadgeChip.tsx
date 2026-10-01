@@ -8,6 +8,7 @@ const kindStyle: Record<Badge['kind'], string> = {
   watch: 'border-red-700 text-red-800 dark:border-red-900 dark:text-red-300',
   cap: 'border-orange-700 text-orange-900 dark:border-orange-800 dark:text-orange-300',
   info: 'border-slate-500 text-slate-700 dark:text-slate-300',
+  compound: 'border-teal-700 text-teal-800 dark:text-teal-300',
 }
 
 // On the card's always-dark band the dark-theme colours apply whatever the page theme is.
@@ -17,12 +18,14 @@ const kindStyleOnDark: Record<Badge['kind'], string> = {
   watch: 'border-red-900 text-red-300',
   cap: 'border-orange-800 text-orange-300',
   info: 'border-slate-500 text-slate-300',
+  compound: 'border-teal-700 text-teal-300',
 }
 
 function chipText(badge: Badge) {
   if (badge.kind === 'watch') return `⚠ ${badge.label}`
   if (badge.kind === 'cap') return `⛔ ${badge.label}`
   if (badge.kind === 'info') return `ⓘ ${badge.label}`
+  if (badge.kind === 'compound') return `🌿 ${badge.label}`
   return formatNutrient(badge.label)
 }
 
