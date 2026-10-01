@@ -9,8 +9,14 @@ colors:
   text: "#ffffff"
   text-muted: "#9ca3af"
   emerald-bright: "#34d399"
-  emerald: "#10b981"
-  emerald-deep: "#059669"
+  emerald: "#047857"
+  emerald-deep: "#065f46"
+  page-light: "#eef1f6"
+  surface-light: "#ffffff"
+  surface-raised-light: "#e6eaf1"
+  line-light: "#cbd2dc"
+  text-light: "#0f172a"
+  text-muted-light: "#475569"
   tier-bronze: "#d9a273"
   tier-silver: "#cfd6de"
   tier-gold: "#e8bf4a"
@@ -21,7 +27,7 @@ colors:
   ink-on-gold: "#2a1d00"
   role-weekly: "#2563eb"
   role-boost: "#9333ea"
-  role-treat: "#d97706"
+  role-treat: "#b45309"
   stat-high: "#22c55e"
   stat-good: "#84cc16"
   stat-mid: "#f59e0b"
@@ -124,18 +130,19 @@ The dark page is the current implementation, not a binding identity choice. Only
 A near-black navy page, grey surfaces, one emerald accent, and four metallic tier faces that are the only strongly saturated areas on screen.
 
 ### Primary
-- **Emerald** (#10b981): primary buttons and calls to action ("Set Calories"). The one interface accent.
-- **Emerald Bright** (#34d399): the wordmark and text links (e.g. "How do scores work?"). Text-only use, since it is for dark backgrounds.
-- **Emerald Deep** (#059669): the selected tab and button hover; where something is on or pressed.
+- **Emerald** (#047857): primary buttons, the selected tab and selected states, always with white text (5.5:1). The one interface accent. The earlier brighter emerald (#10b981) gave white text only 2.5:1 and was retired.
+- **Emerald Bright** (#34d399): the wordmark and text links in the dark theme only. The light theme uses Emerald (#047857) for the same job; both are the `accent` token.
+- **Emerald Deep** (#065f46): button hover and pressed states.
 
 ### Secondary (card tiers)
 - **Bronze** (#d9a273): overall under 60. Gradient #e6b48a → #b97c4f. Text #2b1608.
+  (Tier colours are tokens in `tailwind.config.js`: `bronze`, `silver`, `gold`, `elite`, each with `light`, `DEFAULT`, `dark` and `ink`. They are identical in both themes.)
 - **Silver** (#cfd6de): overall 60 to 74. Gradient #eef1f5 → #a6b0bc. Text #141a22.
 - **Gold** (#e8bf4a): overall 75 to 84. Gradient #f7d676 → #c9972a. Text #2a1d00.
 - **Elite** (#2b2a7a to #0f766e): overall 85 and above. Indigo-to-teal gradient from #3b3aa8. White text.
 
 ### Tertiary (meaning colours)
-- **Role chips**: Eat daily emerald (#059669), 2–3× a week blue (#2563eb), Small boost purple (#9333ea), Flavour staple grey (#4b5563), Treat amber (#d97706).
+- **Role chips**: Eat daily emerald (#059669), 2–3× a week blue (#2563eb), Small boost purple (#9333ea), Flavour staple grey (#4b5563), Treat amber (#b45309). All white-text fills measure at least 5.0:1.
 - **Stat bars**: green (#22c55e) 80+, lime (#84cc16) 60+, amber (#f59e0b) 40+, orange (#f97316) 20+, red (#ef4444) below 20.
 
 ### Neutral
@@ -145,12 +152,20 @@ A near-black navy page, grey surfaces, one emerald accent, and four metallic tie
 - **Line** (#374151): input borders and dividers.
 - **Text** (#ffffff) and **Text Muted** (#9ca3af): body and secondary text. Muted is the lightest allowed for small secondary text (AA on Surface and Ink); never go darker than gray-400.
 
+### Themes
+The interface has a dark and a light theme, switched by the "Dark mode" button and defaulting to the system setting. Neutrals are CSS variables (`--gray-50` … `--gray-950`, `--page`, `--fg`, `--accent`) in `src/index.css`, and Tailwind's `gray` scale is mapped onto them, so a class like `bg-gray-900` means "surface" in either theme. Light inverts the scale:
+- **Page** (#eef1f6), **Surface** (#ffffff), **Surface Raised** (#e6eaf1), **Line** (#cbd2dc), **Text** (#0f172a), **Text Muted** (#475569).
+- Accent text and tinted panels carry explicit `dark:` pairs. Anything that sits on the always-dark card badge band uses the dark palette whatever the theme.
+- Tier cards and the badge band do not change between themes.
+
 ### Named Rules
 **The Tier Is Earned Rule.** A card's tier comes only from its overall rating (Bronze under 60, Silver 60–74, Gold 75–84, Elite 85+). Never recolour a card for emphasis, and never use tier colours on interface chrome.
 
 **The One Voice Rule.** Emerald is the only accent on the interface itself. A screen has a handful of emerald elements, not a wash of them.
 
-**The Pair Rule.** Every tier face is paired with its own text colour. Don't put white text on Silver or Gold, or dark text on Elite.
+**The Pair Rule.** Every tier face is paired with its own text colour. Don't put white text on Silver or Gold, or dark text on Elite. Secondary text on a face is its ink at 95% opacity; lower fails AA on bronze.
+
+**The Both Themes Rule.** A colour is not done until it passes AA in dark and light. Pair every accent text colour with a `dark:` variant, and never use opacity to dim text that carries meaning.
 
 ## Typography
 
@@ -196,13 +211,13 @@ Soft, rounded rectangles throughout. Cards and modals use 16px corners, the phot
 
 ### Buttons
 - **Shape:** 8px radius.
-- **Primary:** Emerald fill (#10b981), white text, 8px 16px padding, medium weight.
-- **Hover / Focus:** darkens to Emerald Deep (#059669) with a 150ms colour transition; keyboard focus keeps the browser focus ring and must stay visible.
+- **Primary:** Emerald fill (#047857), white text, 8px 16px padding, medium weight.
+- **Hover / Focus:** darkens to Emerald Deep (#065f46) with a 150ms colour transition; keyboard focus keeps the browser focus ring and must stay visible.
 - **Disabled:** 40–50% opacity; use `aria-disabled` while loading so focus is not lost.
 
 ### Chips
 - **Style:** fully round, 4px 12px, white text on a solid fill. Role chips use the role colours; tier chips use the tier faces with their paired text colour.
-- **State:** selected is full opacity (tier chips also get a white ring); unselected is 70–80% opacity. Always expose `aria-pressed`.
+- **State:** selected gets a 2px ring in the text colour with a page-coloured offset; unselected has none (no opacity dimming, which breaks contrast). Always expose `aria-pressed`.
 
 ### Food card (signature component)
 The recurring unit of the whole system: a portrait tile in its tier colours.
@@ -216,17 +231,18 @@ The recurring unit of the whole system: a portrait tile in its tier colours.
 - **Focus:** border shifts to emerald.
 
 ### Navigation
-A pill-shaped segmented bar on Surface. The active section is Emerald Deep with white text and `aria-current="page"`; inactive sections are muted text that turns white on hover. Labels wrap on phones.
+A pill-shaped segmented bar on Surface. The active section is Emerald with white text and `aria-current="page"`; inactive sections are muted text that turns white on hover. Labels wrap on phones.
 
 ### Modals
-Surface (#111827) panel, 16px radius, centred over an 80% black scrim. Role dialog, Escape closes, focus is trapped and returned to the opener. Close button top-right; the content must leave room so it never covers the score.
+A flush panel on Surface, 16px radius, centred over an 80% black scrim. A food's modal opens with the card face: the rating, tier, role, a 176px photo and the name in its tier colours, then the detail body on Surface. Role dialog, Escape closes, focus is trapped and returned to the opener. Close button top-right; the content must leave room so it never covers the score.
 
 ## Do's and Don'ts
 
 ### Do:
 - **Do** set every comparable number in Barlow Condensed.
 - **Do** keep text on a tier face in that tier's paired ink colour (#2b1608, #141a22, #2a1d00, or white on Elite).
-- **Do** keep small secondary text at gray-400 (#9ca3af) or lighter on dark surfaces.
+- **Do** keep small secondary text at gray-400, which is #9ca3af in the dark theme and #475569 in the light theme, both AA.
+- **Do** check any new screen in both themes and measure contrast; the current screens were scanned with no failures on enabled text.
 - **Do** give every control a visible label or `aria-label` that names what it acts on ("Sardines", not "View Card").
 - **Do** respect reduced motion: no hover lift or movement when the user asks for less.
 - **Do** keep explanations short and plain; explain what a number means and what it does not.
@@ -237,3 +253,4 @@ Surface (#111827) panel, 16px radius, centred over an 80% black scrim. Role dial
 - **Don't** spread emerald across a screen; it is the one accent.
 - **Don't** present a score as health or medical advice, or word a low score to sound better than it is.
 - **Don't** drop below WCAG AA contrast, or rely on colour alone to carry meaning.
+- **Don't** hard-code colours inside charts; they follow the theme through CSS (see the Recharts rules in `index.css`).

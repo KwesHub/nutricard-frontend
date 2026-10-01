@@ -40,7 +40,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
 
   return (
     <Modal onClose={onClose} maxWidth={480} label="Calorie calculator">
-        <h2 className="text-xl font-bold text-white mb-1">TDEE Calculator</h2>
+        <h2 className="text-xl font-bold text-fg mb-1">TDEE Calculator</h2>
         <p className="text-sm text-gray-400 mb-5">Calculate your daily calorie needs</p>
 
         <div className="flex flex-col gap-4">
@@ -51,7 +51,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
               value={age}
               onChange={(e) => setAge(e.target.value ? Number(e.target.value) : '')}
               placeholder="25"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -62,7 +62,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
               value={weightKg}
               onChange={(e) => setWeightKg(e.target.value ? Number(e.target.value) : '')}
               placeholder="70"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
               value={heightCm}
               onChange={(e) => setHeightCm(e.target.value ? Number(e.target.value) : '')}
               placeholder="175"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -86,8 +86,8 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
                   onClick={() => setSex(s)}
                   className={`flex-1 py-2 text-sm font-medium rounded-lg transition-colors ${
                     sex === s
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:text-white'
+                      ? 'bg-emerald-700 text-white'
+                      : 'bg-gray-800 text-gray-400 hover:text-fg'
                   }`}
                 >
                   {s.charAt(0).toUpperCase() + s.slice(1)}
@@ -105,8 +105,8 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
                   onClick={() => setActivityLevel(a.value)}
                   className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                     activityLevel === a.value
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:text-white'
+                      ? 'bg-emerald-700 text-white'
+                      : 'bg-gray-800 text-gray-400 hover:text-fg'
                   }`}
                 >
                   {a.label}
@@ -118,7 +118,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
           <button
             onClick={calculate}
             disabled={!age || !weightKg || !heightCm}
-            className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Calculate
           </button>
@@ -126,12 +126,12 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
           {tdee !== null && (
             <div className="text-center">
               <p className="text-gray-400 text-sm">Your daily calorie needs:</p>
-              <p className="text-3xl font-bold text-emerald-400 mt-1">
+              <p className="text-3xl font-bold text-accent mt-1">
                 {tdee.toLocaleString()} kcal
               </p>
               <button
                 onClick={handleSave}
-                className="mt-4 w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition-colors"
+                className="mt-4 w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-medium rounded-lg transition-colors"
               >
                 Save
               </button>

@@ -5,12 +5,13 @@ interface Props {
   onClose: () => void
   maxWidth?: number
   label?: string
+  flush?: boolean
   children: ReactNode
 }
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-export default function Modal({ onClose, maxWidth = 600, label = 'Details', children }: Props) {
+export default function Modal({ onClose, maxWidth = 600, label = 'Details', flush = false, children }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null)
   // Kept in a ref so the effect below runs once; an inline onClose changes on every parent render.
   const onCloseRef = useRef(onClose)
@@ -65,14 +66,14 @@ export default function Modal({ onClose, maxWidth = 600, label = 'Details', chil
         aria-modal="true"
         aria-label={label}
         tabIndex={-1}
-        className="relative bg-gray-900 rounded-2xl p-6 w-full overflow-y-auto focus:outline-none"
+        className={`relative bg-gray-900 rounded-2xl w-full overflow-y-auto focus:outline-none ${flush ? '' : 'p-6'}`}
         style={{ maxWidth: `${maxWidth}px`, maxHeight: '90vh' }}
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-3 right-3 bg-gray-800 hover:bg-gray-700 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold z-10"
+          className="absolute top-3 right-3 bg-gray-800 hover:bg-gray-700 text-fg w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold z-10"
         >
           <span aria-hidden="true">✕</span>
         </button>

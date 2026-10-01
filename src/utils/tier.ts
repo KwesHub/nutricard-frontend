@@ -1,5 +1,7 @@
-// Card tiers by overall rating, FIFA-style. The face classes carry their own text colours so each
-// tier keeps WCAG AA contrast: dark ink on the three light metals, white on the dark Elite face.
+// Card tiers by overall rating, FIFA-style. The colours are tokens in tailwind.config.js
+// (bronze, silver, gold, elite); each has an `ink` text colour that keeps WCAG AA contrast on
+// its face: dark ink on the three light metals, white on the dark Elite face. Subtext is ink at 95%
+// opacity: lower fails AA on the darkest gradient stop (bronze needs 95%).
 export type TierKey = 'bronze' | 'silver' | 'gold' | 'elite'
 
 export interface Tier {
@@ -14,17 +16,17 @@ export interface Tier {
 
 export const TIERS: Tier[] = [
   { key: 'bronze', label: 'Bronze', range: 'under 60',
-    face: 'bg-gradient-to-br from-[#e6b48a] via-[#d9a273] to-[#b97c4f]',
-    text: 'text-[#2b1608]', subtext: 'text-[#2b1608]/75', chip: 'bg-[#d9a273] text-[#2b1608]' },
+    face: 'bg-gradient-to-br from-bronze-light via-bronze to-bronze-dark',
+    text: 'text-bronze-ink', subtext: 'text-bronze-ink/95', chip: 'bg-bronze text-bronze-ink' },
   { key: 'silver', label: 'Silver', range: '60–74',
-    face: 'bg-gradient-to-br from-[#eef1f5] via-[#cfd6de] to-[#a6b0bc]',
-    text: 'text-[#141a22]', subtext: 'text-[#141a22]/75', chip: 'bg-[#cfd6de] text-[#141a22]' },
+    face: 'bg-gradient-to-br from-silver-light via-silver to-silver-dark',
+    text: 'text-silver-ink', subtext: 'text-silver-ink/95', chip: 'bg-silver text-silver-ink' },
   { key: 'gold', label: 'Gold', range: '75–84',
-    face: 'bg-gradient-to-br from-[#f7d676] via-[#e8bf4a] to-[#c9972a]',
-    text: 'text-[#2a1d00]', subtext: 'text-[#2a1d00]/75', chip: 'bg-[#e8bf4a] text-[#2a1d00]' },
+    face: 'bg-gradient-to-br from-gold-light via-gold to-gold-dark',
+    text: 'text-gold-ink', subtext: 'text-gold-ink/95', chip: 'bg-gold text-gold-ink' },
   { key: 'elite', label: 'Elite', range: '85+',
-    face: 'bg-gradient-to-br from-[#3b3aa8] via-[#2b2a7a] to-[#0f766e]',
-    text: 'text-white', subtext: 'text-white/80', chip: 'bg-[#3b3aa8] text-white' },
+    face: 'bg-gradient-to-br from-elite-light via-elite to-elite-dark',
+    text: 'text-elite-ink', subtext: 'text-elite-ink/95', chip: 'bg-elite text-elite-ink' },
 ]
 
 export function tierFor(score: number): Tier {

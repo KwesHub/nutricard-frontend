@@ -19,12 +19,12 @@ export const formatName = (name: string) =>
 
 export const roleColor = (role: string) => {
   switch (role) {
-    case 'DAILY_DRIVER': return 'bg-emerald-600'
+    case 'DAILY_DRIVER': return 'bg-emerald-700'
     case 'WEEKLY_ANCHOR': return 'bg-blue-600'
     case 'BOOSTER': return 'bg-purple-600'
-    case 'PANTRY': return 'bg-gray-600'
-    case 'OCCASIONAL': return 'bg-amber-600'
-    default: return 'bg-gray-600'
+    case 'PANTRY': return 'bg-slate-600'
+    case 'OCCASIONAL': return 'bg-amber-700'
+    default: return 'bg-slate-600'
   }
 }
 

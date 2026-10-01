@@ -7,9 +7,10 @@ import {
   Radar,
 } from 'recharts'
 import type { FoodCard as FoodCardType, MicroBreakdown, ProteinBreakdown, TimingContext, UserProfile } from '../types'
-import { foodIcon } from '../utils/foodIcons'
+import { tierFor } from '../utils/tier'
 import { formatRole, formatCategory, formatName, formatNutrient, formatPctRda, roleColor, statColor } from '../utils/formatting'
 import BadgeChip from './BadgeChip'
+import FoodPhoto from './FoodPhoto'
 
 const timingScoreToGrade = (score: number): string => {
   if (score >= 85) return 'S'
@@ -104,7 +105,7 @@ export default function FoodCard({ card, userProfile }: Props) {
   const calPct = (calories && userProfile?.tdee) ? (calories / userProfile.tdee * 100) : null
 
   const synergy = nutritionScore.synergyPotential
-  const synergyColor = synergy >= 70 ? 'text-green-400' : synergy >= 40 ? 'text-amber-400' : 'text-red-400'
+  const synergyColor = synergy >= 70 ? 'text-green-800 dark:text-green-400' : synergy >= 40 ? 'text-amber-800 dark:text-amber-400' : 'text-red-700 dark:text-red-400'
   const synergyDesc = synergy >= 70
     ? 'Highly versatile — combines well with many foods'
     : synergy >= 40
@@ -112,31 +113,38 @@ export default function FoodCard({ card, userProfile }: Props) {
       : 'Best as a standalone — limited combination benefit'
 
   const bestTimingLabel = timingTabs.find(t => t.key === bestTiming)!.label
+  const tier = tierFor(nutritionScore.overallScore)
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="flex items-start justify-between mb-2">
-        <div>
-          <h2 className="text-2xl font-bold text-white">
-            <span aria-hidden="true" className="mr-2">{foodIcon(food.name)}</span>
-            {formatName(food.name)}
-          </h2>
-          <span
-            className={`inline-block mt-1 text-xs font-medium text-white px-2 py-0.5 rounded-full ${roleColor(food.foodRole)}`}
-          >
-            {formatRole(food.foodRole)}
-          </span>
-          <p className="text-sm text-gray-400 mt-1">{formatCategory(food.category)}</p>
+      {/* Header: the card face in its tier colours */}
+      <div className={`${tier.face} ${tier.text} px-6 pb-5 pt-5`}>
+        <div className="flex items-start justify-between pr-10">
+          <div className="leading-none">
+            <span
+              className="font-display text-7xl font-bold"
+              aria-label={`Overall rating ${Math.round(nutritionScore.overallScore)} out of 100`}
+            >
+              {Math.round(nutritionScore.overallScore)}
+            </span>
+            <span className={`block font-display text-base font-semibold uppercase tracking-widest ${tier.subtext}`} aria-hidden="true">
+              {tier.label}
+            </span>
+          </div>
+          <div className="space-y-1 pt-1 text-right">
+            <span className={`inline-block text-xs font-medium text-white px-2 py-0.5 rounded-full ${roleColor(food.foodRole)}`}>
+              {formatRole(food.foodRole)}
+            </span>
+            <p className={`text-xs font-medium ${tier.subtext}`}>{formatCategory(food.category)}</p>
+          </div>
         </div>
-        <div className="text-right pr-10">
-          <span className="text-4xl font-bold text-white">
-            {Math.round(nutritionScore.overallScore)}
-          </span>
-          <span className="text-sm text-gray-400">/100</span>
-        </div>
+        <FoodPhoto name={food.name} className="mt-3 h-44 rounded-xl" />
+        <h2 className="mt-3 font-display text-4xl font-bold uppercase leading-none tracking-wide">
+          {formatName(food.name)}
+        </h2>
       </div>
 
+      <div className="p-6">
       {/* Nutrient Badges */}
       {insights?.badges && insights.badges.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-4">
@@ -155,12 +163,12 @@ export default function FoodCard({ card, userProfile }: Props) {
             onClick={() => setSelectedTiming(t.key)}
             className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors ${
               selectedTiming === t.key
-                ? 'bg-emerald-600 text-white'
-                : 'bg-gray-800 text-gray-400 hover:text-white'
+                ? 'bg-emerald-700 text-white'
+                : 'bg-gray-800 text-gray-400 hover:text-fg'
             }`}
           >
             {t.label}
-            <span className="ml-1 opacity-75">({timingScoreToGrade(parsedTimingScores[t.key])})</span>
+            <span className="ml-1">({timingScoreToGrade(parsedTimingScores[t.key])})</span>
           </button>
         ))}
       </div>
@@ -175,7 +183,7 @@ export default function FoodCard({ card, userProfile }: Props) {
             aria-label="Serving size in grams"
             value={servingG}
             onChange={(e) => setServingG(Math.max(0, Number(e.target.value)))}
-            className="w-16 px-2 py-1 text-sm rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors text-center"
+            className="w-16 px-2 py-1 text-sm rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors text-center"
           />
           <span className="text-xs text-gray-400">g</span>
         </div>
@@ -185,10 +193,10 @@ export default function FoodCard({ card, userProfile }: Props) {
       {/* Calories */}
       {calories !== null && (
         <div className="mb-4">
-          <span className="text-sm text-gray-300">Calories: <span className="font-semibold text-white">~{calories.toLocaleString()} kcal</span></span>
+          <span className="text-sm text-gray-300">Calories: <span className="font-semibold text-fg">~{calories.toLocaleString()} kcal</span></span>
           {calPct !== null && (
             <span className={`ml-2 text-xs font-medium ${
-              calPct < 15 ? 'text-green-400' : calPct <= 30 ? 'text-amber-400' : 'text-red-400'
+              calPct < 15 ? 'text-green-800 dark:text-green-400' : calPct <= 30 ? 'text-amber-800 dark:text-amber-400' : 'text-red-700 dark:text-red-400'
             }`}>
               ({calPct.toFixed(1)}% of your daily budget)
             </span>
@@ -261,7 +269,7 @@ export default function FoodCard({ card, userProfile }: Props) {
                   <span className="text-xs text-gray-400">
                     {formatNutrient(n.name)}
                     {n.rare && (
-                      <span className="ml-1.5 text-amber-400" title="Hard to find in most diets">
+                      <span className="ml-1.5 text-amber-800 dark:text-amber-400" title="Hard to find in most diets">
                         ★ rare
                       </span>
                     )}
@@ -297,23 +305,23 @@ export default function FoodCard({ card, userProfile }: Props) {
 
       {/* Standout fact */}
       {insights?.standoutFact && (
-        <div className="mt-3 p-3 bg-emerald-950/50 border border-emerald-800 rounded-lg">
+        <div className="mt-3 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-lg">
           <div className="flex items-center gap-2 mb-1">
             <span>💡</span>
-            <span className="text-xs font-medium text-emerald-300">Standout</span>
+            <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">Standout</span>
           </div>
-          <p className="text-xs text-emerald-100/80">{insights.standoutFact}</p>
+          <p className="text-xs text-emerald-900 dark:text-emerald-100/80">{insights.standoutFact}</p>
         </div>
       )}
 
       {/* Anti-nutrient watch-out */}
       {insights?.penaltyNote && (
-        <div className="mt-3 p-3 bg-amber-950/40 border border-amber-800 rounded-lg">
+        <div className="mt-3 p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-lg">
           <div className="flex items-center gap-2 mb-1">
             <span>⚠️</span>
-            <span className="text-xs font-medium text-amber-300">Watch-out</span>
+            <span className="text-xs font-medium text-amber-800 dark:text-amber-300">Watch-out</span>
           </div>
-          <p className="text-xs text-amber-100/80">{insights.penaltyNote}</p>
+          <p className="text-xs text-amber-900 dark:text-amber-100/80">{insights.penaltyNote}</p>
         </div>
       )}
 
@@ -332,9 +340,10 @@ export default function FoodCard({ card, userProfile }: Props) {
         <div className="flex items-center gap-2 mb-1">
           <span>🕐</span>
           <span className="text-xs font-medium text-gray-300">Best timing:</span>
-          <span className="text-xs font-bold text-emerald-400">{bestTimingLabel}</span>
+          <span className="text-xs font-bold text-accent">{bestTimingLabel}</span>
         </div>
         <p className="text-xs text-gray-400">{timingInsights[bestTiming]}</p>
+      </div>
       </div>
     </div>
   )

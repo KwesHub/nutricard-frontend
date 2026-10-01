@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-01T09:50:12+01:00",
+  "generatedAt": "2026-10-01T10:12:31+01:00",
   "title": "Design System: NutriCard",
   "extensions": {
     "colorMeta": {
@@ -112,31 +112,31 @@
       "emerald": {
         "role": "primary",
         "displayName": "Emerald",
-        "canonical": "#10b981",
+        "canonical": "#047857",
         "tonalRamp": [
-          "#064631",
-          "#0b7f58",
-          "#10b780",
-          "#19eba5",
-          "#51f0bb",
-          "#8af5d1",
-          "#b9f9e4",
-          "#e8fdf6"
+          "#024a36",
+          "#048561",
+          "#06c08c",
+          "#0df7b4",
+          "#48f9c7",
+          "#84fbd9",
+          "#b5fde8",
+          "#e6fef7"
         ]
       },
       "emerald-deep": {
         "role": "primary",
         "displayName": "Emerald Deep",
-        "canonical": "#059669",
+        "canonical": "#065f46",
         "tonalRamp": [
-          "#024a34",
-          "#04855d",
-          "#06c087",
-          "#0df7ae",
-          "#48f9c2",
-          "#84fbd6",
-          "#b5fde6",
-          "#e6fef7"
+          "#054835",
+          "#08825f",
+          "#0cbb8a",
+          "#14f0b2",
+          "#4ef4c5",
+          "#87f7d8",
+          "#b7fae8",
+          "#e7fdf7"
         ]
       },
       "tier-bronze": {
@@ -213,6 +213,96 @@
           "#bbf6f2",
           "#e8fcfb"
         ]
+      },
+      "page-light": {
+        "role": "neutral",
+        "displayName": "Page (light)",
+        "canonical": "#eef1f6",
+        "tonalRamp": [
+          "#1a2332",
+          "#30405a",
+          "#455c82",
+          "#5c78a8",
+          "#8499be",
+          "#acbad3",
+          "#cdd6e5",
+          "#eef1f6"
+        ]
+      },
+      "surface-light": {
+        "role": "neutral",
+        "displayName": "Surface (light)",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#454545",
+          "#636363",
+          "#828282",
+          "#a1a1a1",
+          "#bfbfbf",
+          "#d9d9d9",
+          "#f2f2f2"
+        ]
+      },
+      "surface-raised-light": {
+        "role": "neutral",
+        "displayName": "Surface Raised (light)",
+        "canonical": "#e6eaf1",
+        "tonalRamp": [
+          "#1b2331",
+          "#314058",
+          "#475c7f",
+          "#5f78a5",
+          "#8699bb",
+          "#adbad1",
+          "#ced6e4",
+          "#eff1f6"
+        ]
+      },
+      "line-light": {
+        "role": "neutral",
+        "displayName": "Line (light)",
+        "canonical": "#cbd2dc",
+        "tonalRamp": [
+          "#1f252e",
+          "#374252",
+          "#506077",
+          "#6a7e9a",
+          "#8e9db3",
+          "#b3bdcc",
+          "#d1d7e0",
+          "#f0f2f5"
+        ]
+      },
+      "text-light": {
+        "role": "neutral",
+        "displayName": "Text (light)",
+        "canonical": "#0f172a",
+        "tonalRamp": [
+          "#141f38",
+          "#243865",
+          "#345093",
+          "#476abd",
+          "#748ecd",
+          "#a1b3dd",
+          "#c7d1eb",
+          "#ecf0f8"
+        ]
+      },
+      "text-muted-light": {
+        "role": "neutral",
+        "displayName": "Text Muted (light)",
+        "canonical": "#475569",
+        "tonalRamp": [
+          "#1f252e",
+          "#384352",
+          "#506077",
+          "#6a7e9a",
+          "#8e9db3",
+          "#b3bdcc",
+          "#d1d7e0",
+          "#f0f2f5"
+        ]
       }
     },
     "typographyMeta": {
@@ -275,7 +365,7 @@
       "refersTo": "button-primary",
       "description": "The one main action on a screen, e.g. Set Calories.",
       "html": "<button class=\"ds-btn-primary\">Set Calories</button>",
-      "css": ".ds-btn-primary{background:#10b981;color:#fff;padding:8px 16px;border:0;border-radius:8px;font:500 14px 'DM Sans',system-ui,sans-serif;transition:background .15s}.ds-btn-primary:hover{background:#059669}.ds-btn-primary:focus-visible{outline:2px solid #fff;outline-offset:2px}"
+      "css": ".ds-btn-primary{background:#047857;color:#fff;padding:8px 16px;border:0;border-radius:8px;font:500 14px 'DM Sans',system-ui,sans-serif;transition:background .15s}.ds-btn-primary:hover{background:#065f46}.ds-btn-primary:focus-visible{outline:2px solid #fff;outline-offset:2px}"
     },
     {
       "name": "Search Input",
@@ -283,7 +373,7 @@
       "refersTo": "input-search",
       "description": "Text field for searching foods.",
       "html": "<input class=\"ds-input\" placeholder=\"Search foods...\" aria-label=\"Search foods\">",
-      "css": ".ds-input{width:260px;padding:8px 16px;background:#1f2937;color:#fff;border:1px solid #374151;border-radius:8px;font:14px 'DM Sans',system-ui,sans-serif}.ds-input::placeholder{color:#9ca3af}.ds-input:focus{outline:none;border-color:#10b981}"
+      "css": ".ds-input{width:260px;padding:8px 16px;background:#1f2937;color:#fff;border:1px solid #374151;border-radius:8px;font:14px 'DM Sans',system-ui,sans-serif}.ds-input::placeholder{color:#9ca3af}.ds-input:focus{outline:none;border-color:#047857}"
     },
     {
       "name": "Section Nav",
@@ -291,7 +381,7 @@
       "refersTo": "tab-active",
       "description": "Segmented bar switching Foods, Meal Builder and Compare.",
       "html": "<nav class=\"ds-nav\"><button class=\"ds-nav-on\" aria-current=\"page\">Food Database</button><button>Meal Builder</button><button>Compare</button></nav>",
-      "css": ".ds-nav{display:inline-flex;gap:4px;padding:4px;background:#111827;border-radius:12px}.ds-nav button{padding:8px 20px;border:0;border-radius:8px;background:transparent;color:#9ca3af;font:500 14px 'DM Sans',system-ui,sans-serif}.ds-nav button:hover{color:#fff}.ds-nav .ds-nav-on{background:#059669;color:#fff}"
+      "css": ".ds-nav{display:inline-flex;gap:4px;padding:4px;background:#111827;border-radius:12px}.ds-nav button{padding:8px 20px;border:0;border-radius:8px;background:transparent;color:#9ca3af;font:500 14px 'DM Sans',system-ui,sans-serif}.ds-nav button:hover{color:#fff}.ds-nav .ds-nav-on{background:#065f46;color:#fff}"
     },
     {
       "name": "Tier Chip",

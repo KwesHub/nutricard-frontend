@@ -115,8 +115,8 @@ export default function MealBuilder({ userProfile }: Props) {
                   aria-pressed={timing === t.value}
                   className={`px-2 py-1 text-xs rounded-lg transition-colors ${
                     timing === t.value
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:text-white'
+                      ? 'bg-emerald-700 text-white'
+                      : 'bg-gray-800 text-gray-400 hover:text-fg'
                   }`}
                 >
                   {t.label}
@@ -134,7 +134,7 @@ export default function MealBuilder({ userProfile }: Props) {
             <div className="flex flex-col gap-2 mb-4">
               {mealItems.map(item => (
                 <div key={item.food.id} className="flex items-center gap-2">
-                  <span className="text-sm text-white flex-1 truncate min-w-0">
+                  <span className="text-sm text-fg flex-1 truncate min-w-0">
                     {formatName(item.food.name)}
                   </span>
                   <input
@@ -143,12 +143,12 @@ export default function MealBuilder({ userProfile }: Props) {
                     min={1}
                     value={item.quantityG}
                     onChange={e => updateQuantity(item.food.id, Number(e.target.value))}
-                    className="w-14 px-1.5 py-1 text-xs rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 text-center"
+                    className="w-14 px-1.5 py-1 text-xs rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 text-center"
                   />
                   <span className="text-xs text-gray-400">g</span>
                   <button
                     onClick={() => removeFood(item.food.id)}
-                    className="text-gray-400 hover:text-red-400 transition-colors text-sm shrink-0"
+                    className="text-gray-400 hover:text-red-700 dark:hover:text-red-400 transition-colors text-sm shrink-0"
                   >
                     ✕
                   </button>
@@ -160,12 +160,12 @@ export default function MealBuilder({ userProfile }: Props) {
             </div>
           )}
 
-          {error && <p className="text-xs text-red-400 mb-3">{error}</p>}
+          {error && <p className="text-xs text-red-700 dark:text-red-400 mb-3">{error}</p>}
 
           <button
             onClick={scoreMeal}
             disabled={mealItems.length === 0 || scoring}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold py-2.5 rounded-lg transition-colors"
+            className="w-full bg-emerald-700 hover:bg-emerald-800 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold py-2.5 rounded-lg transition-colors"
           >
             {scoring ? 'Scoring…' : 'Score Meal'}
           </button>
@@ -179,7 +179,7 @@ export default function MealBuilder({ userProfile }: Props) {
           placeholder="Search foods..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+          className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-fg placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
         />
 
         {foodsLoading ? (
@@ -192,11 +192,11 @@ export default function MealBuilder({ userProfile }: Props) {
               return (
                 <div key={food.id} className="bg-gray-900 rounded-xl p-3 flex flex-col gap-1.5">
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-semibold text-white leading-tight">
+                    <p className="text-sm font-semibold text-fg leading-tight">
                       {formatName(food.name)}
                     </p>
                     {inMeal && (
-                      <span className="text-xs text-emerald-400 font-medium shrink-0">
+                      <span className="text-xs text-accent font-medium shrink-0">
                         {currentQty}g
                       </span>
                     )}
@@ -208,8 +208,8 @@ export default function MealBuilder({ userProfile }: Props) {
                     onClick={() => addFood(food)}
                     className={`mt-auto text-xs font-medium py-1.5 px-3 rounded-lg transition-colors ${
                       inMeal
-                        ? 'bg-emerald-900 text-emerald-300 hover:bg-emerald-800'
-                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 dark:bg-emerald-900 dark:text-emerald-300 dark:hover:bg-emerald-800'
+                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-fg'
                     }`}
                   >
                     {inMeal ? `+ Add ${food.servingSizeG}g more` : '+ Add to Meal'}

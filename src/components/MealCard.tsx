@@ -9,11 +9,11 @@ function GapChip({ gap }: { gap: NutrientAnalysis['gaps'][number] }) {
   return (
     <span
       className={`text-xs px-2 py-0.5 rounded-full border ${
-        gap.rare ? 'border-amber-700 text-amber-300' : 'border-gray-600 text-gray-400'
+        gap.rare ? 'border-amber-700 text-amber-800 dark:text-amber-300' : 'border-gray-600 text-gray-400'
       }`}
     >
       {formatNutrient(gap.name)}
-      {gap.rare && <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>}
+      {gap.rare && <span className="ml-1 text-amber-800 dark:text-amber-400" title="Hard to find in most diets">★</span>}
     </span>
   )
 }
@@ -60,13 +60,13 @@ export default function MealCard({ result }: Props) {
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">{meal.name}</h2>
+          <h2 className="text-2xl font-bold text-fg">{meal.name}</h2>
           <span className="inline-block mt-1 text-xs font-medium bg-emerald-700 text-white px-2 py-0.5 rounded-full">
             {timingLabel[meal.timingContext] ?? meal.timingContext}
           </span>
         </div>
         <div className="text-right">
-          <span className="text-4xl font-bold text-white">{Math.round(mealScore.overallScore)}</span>
+          <span className="text-4xl font-bold text-fg">{Math.round(mealScore.overallScore)}</span>
           <span className="text-sm text-gray-400">/100</span>
         </div>
       </div>
@@ -117,8 +117,8 @@ export default function MealCard({ result }: Props) {
         ) : (
           <ul className="flex flex-col gap-1.5">
             {synergies.map((s, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-emerald-300">
-                <span className="text-emerald-500 mt-0.5 shrink-0">⚡</span>
+              <li key={i} className="flex items-start gap-2 text-xs text-emerald-700 dark:text-emerald-300">
+                <span className="text-emerald-700 dark:text-emerald-400 mt-0.5 shrink-0">⚡</span>
                 {s}
               </li>
             ))}
@@ -133,7 +133,7 @@ export default function MealCard({ result }: Props) {
             Nutrient Gaps{nutrientAnalysis.gaps.length > 0 ? ` (${nutrientAnalysis.gaps.length})` : ''}
           </p>
           {nutrientAnalysis.gaps.length === 0 ? (
-            <p className="text-xs text-emerald-400">
+            <p className="text-xs text-accent">
               This meal touches every nutrient we track — nicely balanced.
             </p>
           ) : (
@@ -162,9 +162,9 @@ export default function MealCard({ result }: Props) {
                 <div className="flex flex-col gap-1.5">
                   {nutrientAnalysis.suggestions.map(s => (
                     <div key={s.foodId} className="flex items-start gap-2 text-xs">
-                      <span className="text-emerald-500 mt-0.5 shrink-0">+</span>
+                      <span className="text-emerald-700 dark:text-emerald-400 mt-0.5 shrink-0">+</span>
                       <span className="text-gray-300">
-                        Later today: <span className="font-semibold text-white">{formatName(s.foodName)}</span>
+                        Later today: <span className="font-semibold text-fg">{formatName(s.foodName)}</span>
                         <span className="text-gray-400">
                           {' '}covers {s.covers.map(formatNutrient).join(', ')}
                         </span>

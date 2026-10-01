@@ -26,7 +26,7 @@ function UniqueStrengthsList({ nutrients }: { nutrients: TopNutrient[] }) {
           <span className="text-xs text-gray-300">
             {formatNutrient(n.name)}
             {n.rare && (
-              <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>
+              <span className="ml-1 text-amber-800 dark:text-amber-400" title="Hard to find in most diets">★</span>
             )}
           </span>
           <span className="text-xs text-gray-400">{formatPctRda(n.pctRda)} RDA</span>
@@ -47,7 +47,7 @@ function LeadsOnList({ nutrients }: { nutrients: LeadingNutrient[] }) {
             <span className="text-xs text-gray-300">
               {formatNutrient(n.name)}
               {n.rare && (
-                <span className="ml-1 text-amber-400" title="Hard to find in most diets">★</span>
+                <span className="ml-1 text-amber-800 dark:text-amber-400" title="Hard to find in most diets">★</span>
               )}
             </span>
             <span className="text-xs text-gray-400">
@@ -109,7 +109,7 @@ export default function FoodCompare() {
             id="compare-a"
             value={idA}
             onChange={e => { setIdA(e.target.value); setResult(null) }}
-            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-emerald-700 focus:outline-none focus:border-emerald-500 transition-colors"
+            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-emerald-700 focus:outline-none focus:border-emerald-500 transition-colors"
           >
             <option value="">Select a food…</option>
             {foods.map(f => (
@@ -126,7 +126,7 @@ export default function FoodCompare() {
             id="compare-b"
             value={idB}
             onChange={e => { setIdB(e.target.value); setResult(null) }}
-            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-white border border-blue-700 focus:outline-none focus:border-blue-500 transition-colors"
+            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-blue-700 focus:outline-none focus:border-blue-500 transition-colors"
           >
             <option value="">Select a food…</option>
             {foods.map(f => (
@@ -138,17 +138,17 @@ export default function FoodCompare() {
         <button
           onClick={compare}
           disabled={!idA || !idB || sameFood || loading}
-          className="px-6 py-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap"
+          className="px-6 py-2 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap"
         >
           {loading ? 'Comparing…' : 'Compare'}
         </button>
       </div>
 
       {sameFood && (
-        <p className="text-amber-400 text-xs mb-4">Select two different foods to compare.</p>
+        <p className="text-amber-800 dark:text-amber-400 text-xs mb-4">Select two different foods to compare.</p>
       )}
       {error && (
-        <p className="text-red-400 text-xs mb-4">{error}</p>
+        <p className="text-red-700 dark:text-red-400 text-xs mb-4">{error}</p>
       )}
 
       {result && (
@@ -160,9 +160,9 @@ export default function FoodCompare() {
               <span className={`inline-block text-xs font-medium text-white px-2 py-0.5 rounded-full mb-2 ${roleColor(result.foodA.role)}`}>
                 {formatRole(result.foodA.role)}
               </span>
-              <p className="text-lg font-bold text-white leading-tight"><span aria-hidden="true" className="mr-1.5">{foodIcon(result.foodA.name)}</span>{formatName(result.foodA.name)}</p>
+              <p className="text-lg font-bold text-fg leading-tight"><span aria-hidden="true" className="mr-1.5">{foodIcon(result.foodA.name)}</span>{formatName(result.foodA.name)}</p>
               <div className="flex items-baseline gap-1 mt-2">
-                <span className="text-3xl font-bold text-emerald-400">{result.foodA.scores.overall.toFixed(1)}</span>
+                <span className="text-3xl font-bold text-accent">{result.foodA.scores.overall.toFixed(1)}</span>
                 <span className="text-xs text-gray-400">/ 100</span>
               </div>
               <div className="flex items-center gap-1.5 mt-1">
@@ -175,9 +175,9 @@ export default function FoodCompare() {
               <span className={`inline-block text-xs font-medium text-white px-2 py-0.5 rounded-full mb-2 ${roleColor(result.foodB.role)}`}>
                 {formatRole(result.foodB.role)}
               </span>
-              <p className="text-lg font-bold text-white leading-tight"><span aria-hidden="true" className="mr-1.5">{foodIcon(result.foodB.name)}</span>{formatName(result.foodB.name)}</p>
+              <p className="text-lg font-bold text-fg leading-tight"><span aria-hidden="true" className="mr-1.5">{foodIcon(result.foodB.name)}</span>{formatName(result.foodB.name)}</p>
               <div className="flex items-baseline gap-1 mt-2">
-                <span className="text-3xl font-bold text-blue-400">{result.foodB.scores.overall.toFixed(1)}</span>
+                <span className="text-3xl font-bold text-blue-700 dark:text-blue-400">{result.foodB.scores.overall.toFixed(1)}</span>
                 <span className="text-xs text-gray-400">/ 100</span>
               </div>
               <div className="flex items-center gap-1.5 mt-1">
@@ -190,9 +190,9 @@ export default function FoodCompare() {
           {/* Overall winner */}
           <div className="mb-5 text-center text-sm font-semibold">
             {result.winner.overall === result.foodA.name
-              ? <span className="text-emerald-400">{formatName(result.foodA.name)} wins overall</span>
+              ? <span className="text-accent">{formatName(result.foodA.name)} wins overall</span>
               : result.winner.overall === result.foodB.name
-                ? <span className="text-blue-400">{formatName(result.foodB.name)} wins overall</span>
+                ? <span className="text-blue-700 dark:text-blue-400">{formatName(result.foodB.name)} wins overall</span>
                 : <span className="text-gray-400">Tied overall</span>
             }
           </div>
@@ -230,12 +230,12 @@ export default function FoodCompare() {
               return (
                 <div key={s.key} className="grid grid-cols-[1fr_5rem_1fr] items-center gap-2">
                   {/* Food A side */}
-                  <div className={`rounded-lg p-2 ${aWins ? 'bg-emerald-950/60' : ''}`}>
+                  <div className={`rounded-lg p-2 ${aWins ? 'bg-emerald-50 dark:bg-emerald-950/60' : ''}`}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className={`text-xs font-semibold ${aWins ? 'text-emerald-400' : 'text-gray-400'}`}>
+                      <span className={`text-xs font-semibold ${aWins ? 'text-accent' : 'text-gray-400'}`}>
                         {vA.toFixed(1)}
                       </span>
-                      {aWins && <span className="text-emerald-500 text-xs font-bold">WIN</span>}
+                      {aWins && <span className="text-emerald-800 dark:text-emerald-400 text-xs font-bold">WIN</span>}
                     </div>
                     <div className="w-full h-1.5 bg-gray-700 rounded-full">
                       <div
@@ -249,10 +249,10 @@ export default function FoodCompare() {
                   <p className="text-[10px] leading-snug text-gray-400 text-center">{s.label}</p>
 
                   {/* Food B side */}
-                  <div className={`rounded-lg p-2 ${bWins ? 'bg-blue-950/60' : ''}`}>
+                  <div className={`rounded-lg p-2 ${bWins ? 'bg-blue-50 dark:bg-blue-950/60' : ''}`}>
                     <div className="flex items-center justify-between mb-1">
-                      {bWins && <span className="text-blue-500 text-xs font-bold">WIN</span>}
-                      <span className={`text-xs font-semibold ml-auto ${bWins ? 'text-blue-400' : 'text-gray-400'}`}>
+                      {bWins && <span className="text-blue-700 dark:text-blue-400 text-xs font-bold">WIN</span>}
+                      <span className={`text-xs font-semibold ml-auto ${bWins ? 'text-blue-700 dark:text-blue-400' : 'text-gray-400'}`}>
                         {vB.toFixed(1)}
                       </span>
                     </div>
@@ -278,14 +278,14 @@ export default function FoodCompare() {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-gray-800 rounded-xl p-3 border-l-4 border-emerald-500">
-                    <p className="text-xs font-semibold text-emerald-400 mb-2">
+                    <p className="text-xs font-semibold text-accent mb-2">
                       {formatName(result.foodA.name)}
                     </p>
                     <UniqueStrengthsList nutrients={result.uniqueStrengths.foodA} />
                     <LeadsOnList nutrients={result.leadsOn?.foodA ?? []} />
                   </div>
                   <div className="bg-gray-800 rounded-xl p-3 border-l-4 border-blue-500">
-                    <p className="text-xs font-semibold text-blue-400 mb-2">
+                    <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-2">
                       {formatName(result.foodB.name)}
                     </p>
                     <UniqueStrengthsList nutrients={result.uniqueStrengths.foodB} />
@@ -303,7 +303,7 @@ export default function FoodCompare() {
           {/* Reset */}
           <button
             onClick={() => setResult(null)}
-            className="mt-5 w-full py-2 text-xs text-gray-400 hover:text-white border border-gray-700 hover:border-gray-500 rounded-lg transition-colors"
+            className="mt-5 w-full py-2 text-xs text-gray-400 hover:text-fg border border-gray-700 hover:border-gray-500 rounded-lg transition-colors"
           >
             Compare different foods
           </button>

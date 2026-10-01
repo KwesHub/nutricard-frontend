@@ -50,7 +50,7 @@ export default function FoodList({ userProfile }: Props) {
   }
 
   if (loading) return <p className="text-gray-400">Loading foods…</p>
-  if (error) return <p className="text-red-400">Error: {error}</p>
+  if (error) return <p className="text-red-700 dark:text-red-400">Error: {error}</p>
   if (foods.length === 0) return <p className="text-gray-400">No foods found.</p>
 
   const filtered = foods.filter((f) => {
@@ -70,12 +70,12 @@ export default function FoodList({ userProfile }: Props) {
   }
 
   const roles: { label: string; value: string | null; bg: string }[] = [
-    { label: 'All', value: null, bg: 'bg-gray-600' },
-    { label: 'Eat daily', value: 'DAILY_DRIVER', bg: 'bg-emerald-600' },
+    { label: 'All', value: null, bg: 'bg-slate-600' },
+    { label: 'Eat daily', value: 'DAILY_DRIVER', bg: 'bg-emerald-700' },
     { label: '2–3× a week', value: 'WEEKLY_ANCHOR', bg: 'bg-blue-600' },
     { label: 'Small boost', value: 'BOOSTER', bg: 'bg-purple-600' },
-    { label: 'Flavour staple', value: 'PANTRY', bg: 'bg-gray-600' },
-    { label: 'Treat', value: 'OCCASIONAL', bg: 'bg-amber-600' },
+    { label: 'Flavour staple', value: 'PANTRY', bg: 'bg-slate-600' },
+    { label: 'Treat', value: 'OCCASIONAL', bg: 'bg-amber-700' },
   ]
 
   return (
@@ -86,10 +86,10 @@ export default function FoodList({ userProfile }: Props) {
         aria-label="Search foods"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+        className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-fg placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
       />
       <details className="mb-4 text-sm text-gray-400">
-        <summary className="cursor-pointer text-emerald-400 hover:text-emerald-300">How do scores work?</summary>
+        <summary className="cursor-pointer text-accent hover:text-emerald-900 dark:hover:text-emerald-300">How do scores work?</summary>
         <p className="mt-2 max-w-2xl">
           Every food gets five 0–100 stats (protein quality, micronutrient density, energy profile, gut
           health, phytonutrients) and an overall rating built from its four best stats. Stats describe
@@ -105,8 +105,8 @@ export default function FoodList({ userProfile }: Props) {
               key={r.label}
               onClick={() => setRoleFilter(isActive ? null : r.value)}
               aria-pressed={isActive}
-              className={`px-3 py-1 text-xs font-medium text-white rounded-full transition-opacity ${r.bg} ${
-                isActive ? 'opacity-100' : 'opacity-70'
+              className={`px-3 py-1 text-xs font-medium text-white rounded-full ${r.bg} ${
+                isActive ? 'ring-2 ring-fg ring-offset-2 ring-offset-page' : 'hover:brightness-110'
               }`}
             >
               {r.label}
@@ -124,20 +124,19 @@ export default function FoodList({ userProfile }: Props) {
               onClick={() => setTierFilter(isActive ? null : t.key)}
               aria-pressed={isActive}
               className={`px-3 py-1 text-xs font-semibold rounded-full ${t.chip} ${
-                isActive ? 'ring-2 ring-white' : 'opacity-80 hover:opacity-100'
+                isActive ? 'ring-2 ring-fg ring-offset-2 ring-offset-page' : 'hover:brightness-110'
               }`}
             >
               {t.label} <span className="font-normal">{t.range}</span>
             </button>
           )
         })}
-        <span className="mx-1 hidden sm:inline text-gray-700" aria-hidden="true">|</span>
         <label htmlFor="food-sort" className="text-xs text-gray-400">Sort by</label>
         <select
           id="food-sort"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-          className="px-2 py-1 text-xs rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500"
+          className="px-2 py-1 text-xs rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500"
         >
           <option value="default">Default</option>
           <option value="rating">Top rated</option>
@@ -145,7 +144,7 @@ export default function FoodList({ userProfile }: Props) {
         </select>
       </div>
       {cardError && (
-        <p className="mb-3 text-sm text-red-400">Failed to load card: {cardError}</p>
+        <p className="mb-3 text-sm text-red-700 dark:text-red-400">Failed to load card: {cardError}</p>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {filtered.map((food) => (
@@ -162,7 +161,7 @@ export default function FoodList({ userProfile }: Props) {
       )}
 
       {selectedCard && (
-        <Modal onClose={() => setSelectedCard(null)} label={`${formatName(selectedCard.food.name)} nutrition card`}>
+        <Modal onClose={() => setSelectedCard(null)} label={`${formatName(selectedCard.food.name)} nutrition card`} flush>
           <FoodCard card={selectedCard} userProfile={userProfile} />
         </Modal>
       )}
