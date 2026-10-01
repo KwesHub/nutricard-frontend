@@ -94,7 +94,7 @@ function App() {
         />
       )}
       <footer className="mt-10 text-xs text-gray-400">
-        Food photos from Pixabay contributors, free to use.{' '}
+        Food photos from Pixabay and Wikimedia Commons contributors, free to use.{' '}
         <a href="/foods/credits.json" className="underline hover:text-fg">Photographer credits</a>
       </footer>
     </main>
