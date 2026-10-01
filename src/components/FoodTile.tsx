@@ -1,5 +1,5 @@
 import type { Food } from '../types'
-import { formatCategory, formatName, formatRole } from '../utils/formatting'
+import { formatName, formatRole } from '../utils/formatting'
 import { tierFor } from '../utils/tier'
 import BadgeChip from './BadgeChip'
 import FoodPhoto from './FoodPhoto'
@@ -43,7 +43,7 @@ export default function FoodTile({ food, loading, onOpen }: Props) {
         </div>
         <div className={`pt-1 text-right text-xs font-medium ${subtext}`}>
           <p>{formatRole(food.foodRole)}</p>
-          <p>{formatCategory(food.category)}</p>
+          {food.frequency && <p>{food.frequency}</p>}
         </div>
       </div>
 
@@ -60,7 +60,7 @@ export default function FoodTile({ food, loading, onOpen }: Props) {
         </button>
       </h2>
 
-      {food.foodRole === 'PANTRY' && (
+      {food.foodRole === 'FLAVOUR' && (
         <p className={`px-4 pt-1 text-xs ${subtext}`}>Rated per 100g, used in small amounts</p>
       )}
 

@@ -60,7 +60,8 @@ export default function FoodList({ userProfile }: Props) {
     const matchesSearch =
       f.name.toLowerCase().includes(q) ||
       f.category.toLowerCase().includes(q) ||
-      f.foodRole.toLowerCase().includes(q)
+      f.foodRole.toLowerCase().includes(q) ||
+      (f.frequency ?? '').toLowerCase().includes(q)
     const matchesRole = !roleFilter || f.foodRole === roleFilter
     const matchesTier = !tierFilter || (f.overallScore != null && tierFor(f.overallScore).key === tierFilter)
     return matchesSearch && matchesRole && matchesTier
@@ -75,11 +76,12 @@ export default function FoodList({ userProfile }: Props) {
 
   const roles: { label: string; value: string | null; bg: string }[] = [
     { label: 'All', value: null, bg: 'bg-slate-600' },
-    { label: 'Eat daily', value: 'DAILY_DRIVER', bg: 'bg-emerald-700' },
-    { label: '2–3× a week', value: 'WEEKLY_ANCHOR', bg: 'bg-blue-600' },
-    { label: 'Small boost', value: 'BOOSTER', bg: 'bg-purple-600' },
-    { label: 'Flavour staple', value: 'PANTRY', bg: 'bg-slate-600' },
-    { label: 'Treat', value: 'OCCASIONAL', bg: 'bg-amber-700' },
+    { label: 'Base', value: 'BASE', bg: 'bg-amber-800' },
+    { label: 'Protein', value: 'PROTEIN', bg: 'bg-red-700' },
+    { label: 'Veg & fruit', value: 'VEG_FRUIT', bg: 'bg-emerald-700' },
+    { label: 'Booster', value: 'BOOSTER', bg: 'bg-purple-600' },
+    { label: 'Flavour', value: 'FLAVOUR', bg: 'bg-slate-600' },
+    { label: 'Treat', value: 'TREAT', bg: 'bg-pink-700' },
   ]
 
   return (

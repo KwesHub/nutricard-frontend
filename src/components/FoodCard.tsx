@@ -135,6 +135,7 @@ export default function FoodCard({ card, userProfile }: Props) {
             <span className={`inline-block text-xs font-medium text-white px-2 py-0.5 rounded-full ${roleColor(food.foodRole)}`}>
               {formatRole(food.foodRole)}
             </span>
+            {food.frequency && <p className={`text-xs font-medium ${tier.subtext}`}>{food.frequency}</p>}
             <p className={`text-xs font-medium ${tier.subtext}`}>{formatCategory(food.category)}</p>
           </div>
         </div>
@@ -142,7 +143,7 @@ export default function FoodCard({ card, userProfile }: Props) {
         <h2 className="mt-3 font-display text-4xl font-bold uppercase leading-none tracking-wide">
           {formatName(food.name)}
         </h2>
-        {food.foodRole === 'PANTRY' && (
+        {food.foodRole === 'FLAVOUR' && (
           <p className={`mt-1 text-xs ${tier.subtext}`}>Rated per 100g, used in small amounts</p>
         )}
       </div>

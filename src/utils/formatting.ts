@@ -1,11 +1,11 @@
-// Plain-language frequency labels — the enum names (Daily Driver, Weekly Anchor…) read as
-// jargon. Criteria for each label live in FUTURE_PLANS.md at the workspace root.
+// The food's role on the plate. How often to eat it is a separate field (food.frequency).
 const ROLE_LABELS: Record<string, string> = {
-  DAILY_DRIVER: 'Eat daily',
-  WEEKLY_ANCHOR: '2–3× a week',
-  BOOSTER: 'Small boost',
-  PANTRY: 'Flavour staple',
-  OCCASIONAL: 'Treat — for taste',
+  BASE: 'Base',
+  PROTEIN: 'Protein',
+  VEG_FRUIT: 'Veg & fruit',
+  BOOSTER: 'Booster',
+  FLAVOUR: 'Flavour',
+  TREAT: 'Treat',
 }
 
 export const formatRole = (role: string) =>
@@ -19,11 +19,13 @@ export const formatName = (name: string) =>
 
 export const roleColor = (role: string) => {
   switch (role) {
-    case 'DAILY_DRIVER': return 'bg-emerald-700'
-    case 'WEEKLY_ANCHOR': return 'bg-blue-600'
+    // All white-text fills at 5:1 or better
+    case 'BASE': return 'bg-amber-800'
+    case 'PROTEIN': return 'bg-red-700'
+    case 'VEG_FRUIT': return 'bg-emerald-700'
     case 'BOOSTER': return 'bg-purple-600'
-    case 'PANTRY': return 'bg-slate-600'
-    case 'OCCASIONAL': return 'bg-amber-700'
+    case 'FLAVOUR': return 'bg-slate-600'
+    case 'TREAT': return 'bg-pink-700'
     default: return 'bg-slate-600'
   }
 }

@@ -142,7 +142,7 @@ A near-black navy page, grey surfaces, one emerald accent, and four metallic tie
 - **Elite** (#2b2a7a to #0f766e): overall 80 and above. Indigo-to-teal gradient from #3b3aa8. White text.
 
 ### Tertiary (meaning colours)
-- **Role chips**: Eat daily emerald (#059669), 2–3× a week blue (#2563eb), Small boost purple (#9333ea), Flavour staple grey (#4b5563), Treat amber (#b45309). All white-text fills measure at least 5.0:1.
+- **Role chips** (role on the plate): Base amber-brown (#92400e), Protein red (#b91c1c), Veg & fruit emerald (#047857), Booster purple (#9333ea), Flavour slate (#475569), Treat pink (#be185d). All white-text fills measure at least 5.0:1. How often to eat a food is plain text on the card, not a chip.
 - **Stat bars**: green (#22c55e) 80+, lime (#84cc16) 60+, amber (#f59e0b) 40+, orange (#f97316) 20+, red (#ef4444) below 20.
 
 ### Neutral

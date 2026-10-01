@@ -10,6 +10,7 @@ export interface Food {
   category: string
   description?: string
   foodRole: string
+  frequency?: string | null
   servingSizeG: number
   badges?: Badge[]
   overallScore?: number | null
