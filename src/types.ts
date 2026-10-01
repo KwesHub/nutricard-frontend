@@ -60,6 +60,10 @@ export interface TopNutrient {
 export interface MicroBreakdown {
   topNutrients: TopNutrient[]
   coverages: Record<string, number>
+  fatG?: number
+  monounsaturatedFatG?: number
+  saturatedFatG?: number
+  alaG?: number
 }
 
 export interface CardInsights {
