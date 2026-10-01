@@ -51,7 +51,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
               value={age}
               onChange={(e) => setAge(e.target.value ? Number(e.target.value) : '')}
               placeholder="25"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -62,7 +62,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
               value={weightKg}
               onChange={(e) => setWeightKg(e.target.value ? Number(e.target.value) : '')}
               placeholder="70"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -73,7 +73,7 @@ export default function TDEECalculator({ onClose, onSave }: Props) {
               value={heightCm}
               onChange={(e) => setHeightCm(e.target.value ? Number(e.target.value) : '')}
               placeholder="175"
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500 transition-colors"
             />
           </div>
 

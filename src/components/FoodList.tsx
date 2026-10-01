@@ -92,7 +92,7 @@ export default function FoodList({ userProfile }: Props) {
         aria-label="Search foods"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-fg placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+        className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-fg placeholder-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500 transition-colors"
       />
       <details className="mb-4 text-sm text-gray-400">
         <summary className="cursor-pointer text-accent hover:text-emerald-900 dark:hover:text-emerald-300">How do scores work?</summary>
@@ -144,7 +144,7 @@ export default function FoodList({ userProfile }: Props) {
           id="food-sort"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-          className="px-2 py-1 text-xs rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500"
+          className="px-2 py-1 text-xs rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500"
         >
           <option value="default">Default</option>
           <option value="rating">Top rated</option>

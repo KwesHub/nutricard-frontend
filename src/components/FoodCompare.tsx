@@ -108,7 +108,7 @@ export default function FoodCompare() {
             id="compare-a"
             value={idA}
             onChange={e => { setIdA(e.target.value); setResult(null) }}
-            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-emerald-700 focus:outline-none focus:border-emerald-500 transition-colors"
+            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500 transition-colors"
           >
             <option value="">Select a food…</option>
             {foods.map(f => (
@@ -125,7 +125,7 @@ export default function FoodCompare() {
             id="compare-b"
             value={idB}
             onChange={e => { setIdB(e.target.value); setResult(null) }}
-            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-blue-700 focus:outline-none focus:border-blue-500 transition-colors"
+            className="w-full px-3 py-2 rounded-lg bg-gray-800 text-fg border border-blue-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-blue-500 transition-colors"
           >
             <option value="">Select a food…</option>
             {foods.map(f => (

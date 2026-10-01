@@ -186,7 +186,7 @@ export default function FoodCard({ card, userProfile }: Props) {
             aria-label="Serving size in grams"
             value={servingG}
             onChange={(e) => setServingG(Math.max(0, Number(e.target.value)))}
-            className="w-16 px-2 py-1 text-sm rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors text-center"
+            className="w-16 px-2 py-1 text-sm rounded-lg bg-gray-800 text-fg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/60 focus:border-emerald-500 transition-colors text-center"
           />
           <span className="text-xs text-gray-400">g</span>
         </div>
