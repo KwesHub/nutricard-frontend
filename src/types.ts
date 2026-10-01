@@ -66,10 +66,22 @@ export interface MicroBreakdown {
   alaG?: number
 }
 
+export interface Versatility {
+  score: number
+  reasons: string[]
+}
+
+export interface PairsWith {
+  foods: string[]
+  reason: string
+}
+
 export interface CardInsights {
   standoutFact: string | null
   penaltyNote: string | null
   badges?: Badge[]
+  versatility?: Versatility | null
+  pairsWith?: PairsWith[]
 }
 
 export interface NutritionScore {
@@ -80,7 +92,6 @@ export interface NutritionScore {
   phytonutrients: number
   bioavailabilityModifier: number
   overallScore: number
-  synergyPotential: number
   kcalPer100g: number
   energyProfileNeutral: number
   timingScores: string | null

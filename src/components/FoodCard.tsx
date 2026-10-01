@@ -103,14 +103,6 @@ export default function FoodCard({ card, userProfile }: Props) {
   const calories = nutritionScore.kcalPer100g ? Math.round(nutritionScore.kcalPer100g * servingG / 100) : null
   const calPct = (calories && userProfile?.tdee) ? (calories / userProfile.tdee * 100) : null
 
-  const synergy = nutritionScore.synergyPotential
-  const synergyColor = synergy >= 70 ? 'text-green-800 dark:text-green-400' : synergy >= 40 ? 'text-amber-800 dark:text-amber-400' : 'text-red-700 dark:text-red-400'
-  const synergyDesc = synergy >= 70
-    ? 'Combines well with many foods'
-    : synergy >= 40
-      ? 'Works well in balanced meals'
-      : 'Gains little from being combined'
-
   const bestTimingLabel = timingTabs.find(t => t.key === bestTiming)!.label
   const tier = tierFor(nutritionScore.overallScore)
 
@@ -328,15 +320,32 @@ export default function FoodCard({ card, userProfile }: Props) {
         </div>
       )}
 
-      {/* Synergy Potential */}
-      <div className="mt-5 p-3 bg-gray-800 rounded-lg">
-        <div className="flex items-center gap-2 mb-1">
-          <span>⚡</span>
-          <span className="text-xs font-medium text-gray-300">Synergy Potential</span>
-          <span className={`text-xs font-bold ml-auto ${synergyColor}`}>{Math.round(synergy)}/100</span>
+      {/* Versatility: how well it works as a base for other foods */}
+      {insights?.versatility && (
+        <div className="mt-5 p-3 bg-gray-800 rounded-lg">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-medium text-gray-300">Versatility</span>
+            <span className="text-xs font-bold ml-auto text-fg">{insights.versatility.score}/100</span>
+          </div>
+          <p className="text-xs text-gray-400">
+            {insights.versatility.reasons.join(', ').replace(/^./, c => c.toUpperCase())}.
+          </p>
         </div>
-        <p className="text-xs text-gray-400">{synergyDesc}</p>
-      </div>
+      )}
+
+      {/* Pairs well with: nutrient pairings shared with the meal card */}
+      {insights?.pairsWith && insights.pairsWith.length > 0 && (
+        <div className="mt-3 p-3 bg-gray-800 rounded-lg">
+          <p className="text-xs font-medium text-gray-300 mb-1.5">Pairs well with</p>
+          <ul className="flex flex-col gap-1.5">
+            {insights.pairsWith.map(p => (
+              <li key={p.reason} className="text-xs text-gray-400">
+                <span className="font-semibold text-fg">{p.foods.map(formatName).join(', ')}</span>: {p.reason}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Best Timing Insight */}
       <div className="mt-3 p-3 bg-gray-800 rounded-lg">
