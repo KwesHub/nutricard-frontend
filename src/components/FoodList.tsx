@@ -10,11 +10,12 @@ import type { TierKey } from '../utils/tier'
 
 interface Props {
   userProfile: UserProfile | null
+  onOpenGuide: () => void
 }
 
 type SortKey = 'default' | 'rating' | 'name' | 'protein' | 'micro' | 'gut' | 'phyto' | 'energy'
 
-export default function FoodList({ userProfile }: Props) {
+export default function FoodList({ userProfile, onOpenGuide }: Props) {
   const [foods, setFoods] = useState<Food[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -102,7 +103,10 @@ export default function FoodList({ userProfile }: Props) {
           something it was never for: salmon isn't penalised for having no fibre. Stats describe 100g of
           the food, not a serving. Micronutrient density is nutrients per calorie, which is why spinach
           beats peanut butter. Energy profile isn't part of the rating; it sets the timing grades on
-          each card. Elite is 80 and up, Gold 70, Silver 55.
+          each card. Elite is 80 and up, Gold 70, Silver 55.{' '}
+          <button type="button" onClick={onOpenGuide} className="text-accent underline hover:text-fg">
+            Read the full scoring guide
+          </button>
         </p>
       </details>
       <div className="flex flex-wrap gap-2 mb-4">

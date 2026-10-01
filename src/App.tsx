@@ -3,9 +3,10 @@ import FoodList from './components/FoodList'
 import MealBuilder from './components/MealBuilder'
 import FoodCompare from './components/FoodCompare'
 import TDEECalculator from './components/TDEECalculator'
+import HowWeScore from './components/HowWeScore'
 import type { UserProfile } from './types'
 
-type View = 'foods' | 'meal' | 'compare'
+type View = 'foods' | 'meal' | 'compare' | 'about'
 
 function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
@@ -50,7 +51,7 @@ function App() {
         </div>
       </header>
 
-      <nav aria-label="Sections" className="flex gap-1 mt-6 mb-6 bg-gray-900 rounded-xl p-1 w-fit">
+      <nav aria-label="Sections" className="flex flex-wrap gap-1 mt-6 mb-6 bg-gray-900 rounded-xl p-1 w-fit max-w-full">
         <button
           onClick={() => setView('foods')}
           aria-current={view === 'foods' ? 'page' : undefined}
@@ -78,11 +79,21 @@ function App() {
         >
           Compare
         </button>
+        <button
+          onClick={() => setView('about')}
+          aria-current={view === 'about' ? 'page' : undefined}
+          className={`px-5 py-2 text-sm font-medium rounded-lg transition-colors ${
+            view === 'about' ? 'bg-emerald-700 text-white' : 'text-gray-400 hover:text-fg'
+          }`}
+        >
+          How we score
+        </button>
       </nav>
 
-      {view === 'foods' && <FoodList userProfile={userProfile} />}
+      {view === 'foods' && <FoodList userProfile={userProfile} onOpenGuide={() => setView('about')} />}
       {view === 'meal' && <MealBuilder userProfile={userProfile} />}
       {view === 'compare' && <FoodCompare />}
+      {view === 'about' && <HowWeScore />}
 
       {showTDEE && (
         <TDEECalculator
