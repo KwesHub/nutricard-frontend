@@ -106,7 +106,7 @@ export default function MealBuilder({ userProfile }: Props) {
 
           {/* Timing */}
           <div className="mb-4">
-            <label className="text-xs text-gray-500 mb-1.5 block">When are you eating this?</label>
+            <label className="text-xs text-gray-400 mb-1.5 block">When are you eating this?</label>
             <div className="flex flex-wrap gap-1">
               {TIMING_OPTIONS.map(t => (
                 <button
@@ -127,7 +127,7 @@ export default function MealBuilder({ userProfile }: Props) {
 
           {/* Items */}
           {mealItems.length === 0 ? (
-            <p className="text-xs text-gray-500 text-center py-6">
+            <p className="text-xs text-gray-400 text-center py-6">
               Add foods from the list to build your meal
             </p>
           ) : (
@@ -145,16 +145,16 @@ export default function MealBuilder({ userProfile }: Props) {
                     onChange={e => updateQuantity(item.food.id, Number(e.target.value))}
                     className="w-14 px-1.5 py-1 text-xs rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 text-center"
                   />
-                  <span className="text-xs text-gray-500">g</span>
+                  <span className="text-xs text-gray-400">g</span>
                   <button
                     onClick={() => removeFood(item.food.id)}
-                    className="text-gray-600 hover:text-red-400 transition-colors text-sm shrink-0"
+                    className="text-gray-400 hover:text-red-400 transition-colors text-sm shrink-0"
                   >
                     ✕
                   </button>
                 </div>
               ))}
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-400 mt-1">
                 {mealItems.length} food{mealItems.length !== 1 ? 's' : ''} · {totalG}g total
               </p>
             </div>
@@ -179,7 +179,7 @@ export default function MealBuilder({ userProfile }: Props) {
           placeholder="Search foods..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
+          className="w-full mb-4 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:border-emerald-500 transition-colors"
         />
 
         {foodsLoading ? (

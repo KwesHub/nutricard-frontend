@@ -7,6 +7,7 @@ import {
   Radar,
 } from 'recharts'
 import type { FoodCard as FoodCardType, MicroBreakdown, ProteinBreakdown, TimingContext, UserProfile } from '../types'
+import { foodIcon } from '../utils/foodIcons'
 import { formatRole, formatCategory, formatName, formatNutrient, formatPctRda, roleColor, statColor } from '../utils/formatting'
 import BadgeChip from './BadgeChip'
 
@@ -117,7 +118,10 @@ export default function FoodCard({ card, userProfile }: Props) {
       {/* Header */}
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h2 className="text-2xl font-bold text-white">{formatName(food.name)}</h2>
+          <h2 className="text-2xl font-bold text-white">
+            <span aria-hidden="true" className="mr-2">{foodIcon(food.name)}</span>
+            {formatName(food.name)}
+          </h2>
           <span
             className={`inline-block mt-1 text-xs font-medium text-white px-2 py-0.5 rounded-full ${roleColor(food.foodRole)}`}
           >
@@ -175,7 +179,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           />
           <span className="text-xs text-gray-400">g</span>
         </div>
-        <span className="text-[10px] text-gray-500">scales calories — quality stats are per 100g</span>
+        <span className="text-[10px] text-gray-400">scales calories — quality stats are per 100g</span>
       </div>
 
       {/* Calories */}
@@ -283,7 +287,7 @@ export default function FoodCard({ card, userProfile }: Props) {
             <span>💪</span>
             <span className="text-xs font-medium text-gray-300">Protein quality drivers</span>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-400">
             {parsedProtein.rawProteinG.toFixed(1)}g protein per 100g · PDCAAS{' '}
             {parsedProtein.pdcaas.toFixed(2)} · amino completeness{' '}
             {Math.round(parsedProtein.completenessFactor * 100)}%
@@ -320,7 +324,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           <span className="text-xs font-medium text-gray-300">Synergy Potential</span>
           <span className={`text-xs font-bold ml-auto ${synergyColor}`}>{Math.round(synergy)}/100</span>
         </div>
-        <p className="text-xs text-gray-500">{synergyDesc}</p>
+        <p className="text-xs text-gray-400">{synergyDesc}</p>
       </div>
 
       {/* Best Timing Insight */}
@@ -330,7 +334,7 @@ export default function FoodCard({ card, userProfile }: Props) {
           <span className="text-xs font-medium text-gray-300">Best timing:</span>
           <span className="text-xs font-bold text-emerald-400">{bestTimingLabel}</span>
         </div>
-        <p className="text-xs text-gray-500">{timingInsights[bestTiming]}</p>
+        <p className="text-xs text-gray-400">{timingInsights[bestTiming]}</p>
       </div>
     </div>
   )

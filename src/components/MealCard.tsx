@@ -111,7 +111,7 @@ export default function MealCard({ result }: Props) {
           Active Synergies{synergies.length > 0 ? ` (${synergies.length})` : ''}
         </p>
         {synergies.length === 0 ? (
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-400">
             No synergies detected — try combining fish with garlic, or adding vitamin C-rich foods alongside iron sources.
           </p>
         ) : (
@@ -140,7 +140,7 @@ export default function MealCard({ result }: Props) {
             <>
               {dailyGaps.length > 0 && (
                 <>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-400 mb-2">
                     Worth covering today — these don't store in the body:
                   </p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
@@ -150,7 +150,7 @@ export default function MealCard({ result }: Props) {
               )}
               {weeklyGaps.length > 0 && (
                 <>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-400 mb-2">
                     Fine to cover across the week — the body stores these (e.g. oily fish twice a week handles omega-3s):
                   </p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
@@ -165,7 +165,7 @@ export default function MealCard({ result }: Props) {
                       <span className="text-emerald-500 mt-0.5 shrink-0">+</span>
                       <span className="text-gray-300">
                         Later today: <span className="font-semibold text-white">{formatName(s.foodName)}</span>
-                        <span className="text-gray-500">
+                        <span className="text-gray-400">
                           {' '}covers {s.covers.map(formatNutrient).join(', ')}
                         </span>
                       </span>
